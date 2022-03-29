@@ -57,7 +57,7 @@ namespace RFQCompras
             cmbcomprador2.SelectedIndex = -1;
             groupBox2.Visible = false;
             validacion = 2; //Proc.ValidarUsuarios(1);
-            usuario = Proc.ValidarUsuarios(2);
+            usuario = 4;//Proc.ValidarUsuarios(2);
            
             cmbComprador.SelectedValue = usuario;
             //if (validacion !=1)
@@ -272,8 +272,14 @@ namespace RFQCompras
                 cmbtipo.Enabled = false;
                 txtObservaciones.Enabled = false;
             }
+            //if (cmbestatus.SelectedValue.ToString() == "1" && usuario== 4)
+            //{
+            //    cmbcomprador2.Enabled = true;
+            //}
 
-                if (cmbestatus.SelectedValue.ToString() == "2")
+
+
+            if (cmbestatus.SelectedValue.ToString() == "2")
             {
                 btnCambiaEstatus.Text = "Tabla Comparativa";
                 dtFechaTabla.Visible = false;
@@ -603,9 +609,16 @@ namespace RFQCompras
             rfq_clickdato(this, e);
 
 
+
         }
 
- 
+    
+
+        private void cmbcomprador2_SelectedValueChanged_1(object sender, EventArgs e)
+        {
+            MessageBox.Show("Prueba", "Prueba", MessageBoxButtons.OK);
+        }
+
         private void btnHistorial_Click(object sender, EventArgs e)
         {
            

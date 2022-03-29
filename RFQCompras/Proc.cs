@@ -20,14 +20,10 @@ namespace RFQCompras
         public static string ConnectionString = ConfigurationManager.AppSettings["ConexionDB"];
         public static string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
         public static string emailsupervisor = ConfigurationManager.AppSettings["emailsupervisor"];
-        string Pc = Environment.MachineName;
-#pragma warning disable CS0169 // The field 'Proc.lista' is never used
-        static List<Listas.Encabezado> lista;
-#pragma warning restore CS0169 // The field 'Proc.lista' is never used
-#pragma warning disable CS0169 // The field 'Proc.listaDetalles' is never used
-        static List<Listas.Detalles> listaDetalles;
-#pragma warning restore CS0169 // The field 'Proc.listaDetalles' is never used
+        public static string MailNotify = ConfigurationManager.AppSettings["CorreoNotif"];
+        public static string pass = ConfigurationManager.AppSettings["pass"];
 
+        string Pc = Environment.MachineName;
         public static void combos(ComboBox obj,int opcion)
         {
             DataTable dt = new DataTable();
@@ -91,7 +87,7 @@ namespace RFQCompras
             MailMessage Mensaje = new MailMessage();
 
             Mensaje.To.Add(new MailAddress(emailsupervisor));
-            Mensaje.From = new MailAddress("notify@mazdalogi.mx");
+            Mensaje.From = new MailAddress(MailNotify);
             Mensaje.Subject = subject;
             Mensaje.Body = body;
             
@@ -104,7 +100,7 @@ namespace RFQCompras
 
             ClienteSMTP.EnableSsl = true;
 
-            NetworkCredential credentials = new NetworkCredential("notify@mazdalogi.mx", "Mazda2020", "");
+            NetworkCredential credentials = new NetworkCredential(MailNotify, "Mazda2020", "");
             ClienteSMTP.Credentials = credentials;
 
 

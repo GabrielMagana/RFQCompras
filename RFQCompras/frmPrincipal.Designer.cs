@@ -185,6 +185,7 @@ namespace RFQCompras
             this.cmbcomprador2.Name = "cmbcomprador2";
             this.cmbcomprador2.Size = new System.Drawing.Size(145, 21);
             this.cmbcomprador2.TabIndex = 6;
+            this.cmbcomprador2.SelectedValueChanged += new System.EventHandler(this.cmbcomprador2_SelectedValueChanged_1);
             // 
             // cmbestatus
             // 

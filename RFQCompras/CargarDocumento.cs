@@ -83,7 +83,7 @@ namespace RFQCompras
                 filName = ofd.FileName;
                 xtName= Path.GetExtension(ofd.FileName);
                 
-                txtruta.Text = filName;  
+                txtruta.Text = filName;   
                 //nombre = ofd;
                   
                 //Copia del archivo
