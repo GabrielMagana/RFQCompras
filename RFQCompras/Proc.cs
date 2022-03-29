@@ -21,8 +21,12 @@ namespace RFQCompras
         public static string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
         public static string emailsupervisor = ConfigurationManager.AppSettings["emailsupervisor"];
         string Pc = Environment.MachineName;
+#pragma warning disable CS0169 // The field 'Proc.lista' is never used
         static List<Listas.Encabezado> lista;
+#pragma warning restore CS0169 // The field 'Proc.lista' is never used
+#pragma warning disable CS0169 // The field 'Proc.listaDetalles' is never used
         static List<Listas.Detalles> listaDetalles;
+#pragma warning restore CS0169 // The field 'Proc.listaDetalles' is never used
 
         public static void combos(ComboBox obj,int opcion)
         {
@@ -51,7 +55,7 @@ namespace RFQCompras
         { int Validacion=0, usuario = 0;
             
             string query = "select case when substring(email,1,CHARINDEX('@',email)-1) = 'loza.m' OR substring(email,1,CHARINDEX('@',email)-1) = 'guerrero.a'then 1 else 2 end, idUsuario " +
-                           "from CatUsuarios with(nolock) where substring(email, 1, CHARINDEX('@', email) - 1) = substring('"+ userName + "', CHARINDEX('\\', '"+ userName + "') + 2, len('"+ userName + "') - CHARINDEX('\\', '" + userName + "'))";
+                           "from CatUsuarios with(nolock) where substring(email, 1, CHARINDEX('@', email) - 1) = substring('"+ userName + "', CHARINDEX('\\', '"+ userName + "') + 1, len('"+ userName + "') - CHARINDEX('\\', '" + userName + "'))";
             using (SqlConnection conn1 = new SqlConnection(ConnectionString))
             {
                 conn1.Open();
@@ -81,11 +85,7 @@ namespace RFQCompras
             if (opcion !=1)
             {
                 emailsupervisor = correo; //aprobación 
-            }
-
-        
-            
-                
+            }         
 
 
             MailMessage Mensaje = new MailMessage();
@@ -125,7 +125,9 @@ namespace RFQCompras
         {
 
             string description = "", body = "", correo = "";
+#pragma warning disable CS0219 // The variable 'opcion' is assigned but its value is never used
             int opcion;
+#pragma warning restore CS0219 // The variable 'opcion' is assigned but its value is never used
 
             if (opcion1 == 1)
             {

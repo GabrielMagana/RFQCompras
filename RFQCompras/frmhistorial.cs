@@ -28,7 +28,7 @@ namespace RFQCompras
 
             Proc.combos(cmbComprador,3);
             cmbComprador.SelectedValue = comprador;
-            validacion = 1;// Proc.ValidarUsuarios(1);
+            validacion = 2;// Proc.ValidarUsuarios(1);
             usuario = 4;//Proc.ValidarUsuarios(2);
             _comprador = usuario;
             cmbComprador.SelectedValue = usuario;

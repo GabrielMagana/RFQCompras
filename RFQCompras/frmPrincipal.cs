@@ -56,12 +56,12 @@ namespace RFQCompras
             Proc.combos(cmbcomprador2, 3);
             cmbcomprador2.SelectedIndex = -1;
             groupBox2.Visible = false;
-            validacion = 2;// Proc.ValidarUsuarios(1);
-            usuario = 1;//Proc.ValidarUsuarios(2);
+            validacion = 2; //Proc.ValidarUsuarios(1);
+            usuario = Proc.ValidarUsuarios(2);
            
             cmbComprador.SelectedValue = usuario;
-            if (validacion !=1)
-            { cmbComprador.Enabled = false; }
+            //if (validacion !=1)
+            //{ cmbComprador.Enabled = false; }
 
 
         }
@@ -225,7 +225,9 @@ namespace RFQCompras
             this.dtFechasolicitan.Value = Details[0].FechaSolicitud;
             this.dtFechaTabla.Value = Details[0].FechaTabla;
             this.dtCotizacion.Value = Details[0].FechaCotizacion;
-
+            this.email = Details[0].email;
+            this.lnktabla = Details[0].lnkTabla;
+            this.lnkrfq = Details[0].lnkRfq;
 
             Formato();
 
@@ -485,7 +487,7 @@ namespace RFQCompras
                     cmd.Parameters.AddWithValue("@idrfq", int.Parse(txtIdRFQ.Text));
                     cmd.Parameters.AddWithValue("@estatus", int.Parse(cmbestatus.SelectedValue.ToString()));
                     cmd.Parameters.AddWithValue("@monto", valor);
-                    cmd.Parameters.AddWithValue("@tipo", int.Parse(cmbestatus.SelectedValue.ToString()));
+                    cmd.Parameters.AddWithValue("@tipo", int.Parse(cmbtipo.SelectedValue.ToString()));
                     cmd.Parameters.AddWithValue("@observaciones", txtObservaciones.Text);
                     cmd.ExecuteNonQuery();
 
@@ -493,12 +495,11 @@ namespace RFQCompras
                 }
 
 
-                if (cmbestatus.SelectedValue.ToString()=="8" || cmbestatus.SelectedValue.ToString() == "3")
+                if (cmbestatus.SelectedValue.ToString()=="11" || cmbestatus.SelectedValue.ToString() == "3")
                 {
                     try
                     {
                         Proc.enviocorreo(3, lnktabla, txtsolicitante.Text, txtdescription.Text, "");
-
                         Proc.enviocorreo(3, lnktabla,email, txtdescription.Text, "");
                         MessageBox.Show("Email enviado correctamente", "Succesfull", MessageBoxButtons.OK);
                     }
@@ -604,6 +605,7 @@ namespace RFQCompras
 
         }
 
+ 
         private void btnHistorial_Click(object sender, EventArgs e)
         {
            

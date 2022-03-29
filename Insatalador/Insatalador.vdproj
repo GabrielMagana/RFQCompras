@@ -34,13 +34,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8C456883BE4CC78B4C6417EAE1C9CB32"
+        "OwnerKey" = "8:_0B7EC2CA21D94616B1E97526D295D4A1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0B7EC2CA21D94616B1E97526D295D4A1"
+        "OwnerKey" = "8:_8C456883BE4CC78B4C6417EAE1C9CB32"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -61,6 +61,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -77,6 +93,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -212,9 +236,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:RFQ Compras"
+        "ProductName" = "8:RFQ Compras temporal"
         "ProductCode" = "8:{FE36125A-D166-4C31-AC20-51E9EDA949C4}"
-        "PackageCode" = "8:{B7CB6E21-EE36-4B7D-8F00-E56778BB91C5}"
+        "PackageCode" = "8:{2277E33C-617A-437F-9A56-FC9CB62BF763}"
         "UpgradeCode" = "8:{3A09B4CA-B184-4057-B809-CFEC3A73B9C4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -225,7 +249,7 @@
         "Manufacturer" = "8:Mazda Logi"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Insatalador"
+        "Title" = "8:Instalador"
         "Subject" = "8:"
         "ARPCONTACT" = "8:GMA"
         "Keywords" = "8:"
@@ -336,7 +360,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6DDAC95235114D4694022834F859BD89"
             {
-            "Name" = "8:RFQCompras (Active)"
+            "Name" = "8:RFQCompras Temporal"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -350,7 +374,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BF21930C9A5C4B6187307178EF77B068"
             {
-            "Name" = "8:RFQCompras (Active)"
+            "Name" = "8:RFQCompras Temporal"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"

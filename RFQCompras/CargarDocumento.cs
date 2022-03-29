@@ -55,8 +55,12 @@ namespace RFQCompras
             string xtName;
             string destinotabla="";
         
+#pragma warning disable CS1717 // Assignment made to same variable; did you mean to assign something else?
             Ruta = Ruta ;
+#pragma warning restore CS1717 // Assignment made to same variable; did you mean to assign something else?
+#pragma warning disable CS1717 // Assignment made to same variable; did you mean to assign something else?
            RutaCot = RutaCot;
+#pragma warning restore CS1717 // Assignment made to same variable; did you mean to assign something else?
 
 
             if (_establa == 1)
@@ -70,7 +74,7 @@ namespace RFQCompras
 
          
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "JPG (*.jpg)|*.jpg|PNG (*.png*)|*.png*|PDF (*.pdf)|*.pdf (*.xlsx)|*.xlsx (*.docx)|*.docx";
+            ofd.Filter = "All (*.*)|*.*";
             //Restaurar la ventana despues del open fileDialog
             ofd.RestoreDirectory = true;
             if (ofd.ShowDialog() == DialogResult.OK)
@@ -78,7 +82,7 @@ namespace RFQCompras
           
                 filName = ofd.FileName;
                 xtName= Path.GetExtension(ofd.FileName);
-               
+                
                 txtruta.Text = filName;  
                 //nombre = ofd;
                   
@@ -114,6 +118,11 @@ namespace RFQCompras
 
             this.Close();
             return;
+        }
+
+        private void uploadTabla1_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void CargarDocumento_Load(object sender, EventArgs e)

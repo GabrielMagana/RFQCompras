@@ -30,7 +30,6 @@ namespace RFQCompras
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.ucListado1 = new RFQCompras.ucListado();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lnkTabla = new System.Windows.Forms.LinkLabel();
             this.lnkRFQ = new System.Windows.Forms.LinkLabel();
@@ -70,6 +69,7 @@ namespace RFQCompras
             this.cmbComprador = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ucListado1 = new RFQCompras.ucListado();
             this.ucDetails1 = new RFQCompras.ucDetails();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -79,26 +79,13 @@ namespace RFQCompras
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Controls.Add(this.ucListado1);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 68);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(254, 382);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(272, 382);
             this.flowLayoutPanel1.TabIndex = 2;
-            // 
-            // ucListado1
-            // 
-            this.ucListado1.Area = null;
-            this.ucListado1.BackColor = System.Drawing.Color.Gainsboro;
-            this.ucListado1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucListado1.Descripcion = null;
-            this.ucListado1.Estatus = null;
-            this.ucListado1.IDRFQ = 0;
-            this.ucListado1.Location = new System.Drawing.Point(3, 3);
-            this.ucListado1.Name = "ucListado1";
-            this.ucListado1.Size = new System.Drawing.Size(241, 118);
-            this.ucListado1.Solicitante = null;
-            this.ucListado1.TabIndex = 1;
             // 
             // groupBox2
             // 
@@ -498,6 +485,20 @@ namespace RFQCompras
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // ucListado1
+            // 
+            this.ucListado1.Area = null;
+            this.ucListado1.BackColor = System.Drawing.Color.Gainsboro;
+            this.ucListado1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucListado1.Descripcion = null;
+            this.ucListado1.Estatus = null;
+            this.ucListado1.IDRFQ = 0;
+            this.ucListado1.Location = new System.Drawing.Point(3, 3);
+            this.ucListado1.Name = "ucListado1";
+            this.ucListado1.Size = new System.Drawing.Size(241, 118);
+            this.ucListado1.Solicitante = null;
+            this.ucListado1.TabIndex = 1;
+            // 
             // ucDetails1
             // 
             this.ucDetails1.Comprador = 0;
@@ -529,7 +530,6 @@ namespace RFQCompras
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.groupBox3);
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmPrincipal";
             this.Text = "RFQ";
