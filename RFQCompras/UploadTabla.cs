@@ -38,16 +38,5 @@ namespace RFQCompras
 
         }
       
-   
-
-        private void btnGuardarDoc_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            return;
-        }
-    }
+       }
 }

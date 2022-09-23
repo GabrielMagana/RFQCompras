@@ -20,33 +20,41 @@ namespace RFQCompras
     {
         public int resultado=1,validacion,usuario;
         public static string ConnectionString = ConfigurationManager.AppSettings["ConexionDB"];
-        public static string Ruta = ConfigurationManager.AppSettings["rutaTabla"];
-        public static string RutaCot = ConfigurationManager.AppSettings["rutaCotizacion"];
-        string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+        public static string Ruta;
+        public static string RutaCot;
+        string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name,_usuario;
         string Pc = Environment.MachineName;
         static List<Listas.Encabezado> lista;
         static List<Listas.Detalles> listaDetalles;
         public static int Dato;
         string lnktabla, lnkrfq,email;
+        DataTable dt= new DataTable();
+        DataTable permisos = new DataTable();
 
         static frmPrincipal _obj;
         
-        public static frmPrincipal Instance
+     
+        public frmPrincipal(string Usuario)
         {
-            get
-            {
-                if (_obj == null)
-                {
-                    _obj = new frmPrincipal();
-                }
-                return _obj;
-            }
-        }
-        
-        public frmPrincipal()
-        {
+            int opcion;
             InitializeComponent();
-            Proc.combos(cmbComprador, 3);
+            
+            dt = Proc.ObtenerConfiguraciones(3);
+            Ruta = dt.Rows[0]["Valor1"].ToString();
+            RutaCot = dt.Rows[0]["Valor1"].ToString();
+
+            _usuario = Usuario;
+
+            permisos = Proc.ValidarUsuarios(_usuario);
+
+            validacion = int.Parse(permisos.Rows[0]["permiso"].ToString().Trim());
+            usuario = int.Parse(permisos.Rows[0]["idusuario"].ToString().Trim());
+
+            if (validacion == 2 || validacion == 1 || validacion == 4)
+            { opcion = 3; }
+            else { opcion = 4; }
+
+            Proc.combos(cmbComprador, opcion);
             cmbComprador.SelectedIndex = -1;
             this.dtfecha.Value = DateTime.Now;
             Proc.combos(cmbtipo, 1);
@@ -56,12 +64,12 @@ namespace RFQCompras
             Proc.combos(cmbcomprador2, 3);
             cmbcomprador2.SelectedIndex = -1;
             groupBox2.Visible = false;
-            validacion = 2; //Proc.ValidarUsuarios(1);
-            usuario = 4;//Proc.ValidarUsuarios(2);
+
+            
            
             cmbComprador.SelectedValue = usuario;
-            //if (validacion !=1)
-            //{ cmbComprador.Enabled = false; }
+            if (validacion != 1)
+            { cmbComprador.Enabled = false; btnUpdate.Visible = false; }
 
 
         }
@@ -189,6 +197,7 @@ namespace RFQCompras
             this.email = Details[0].email;
             this.lnktabla = Details[0].lnkTabla;
             this.lnkrfq = Details[0].lnkRfq;
+            this.txtProvSugerido.Text= Details[0].ProvSugerido;
 
 
             Formato();
@@ -235,169 +244,220 @@ namespace RFQCompras
 
         private void Formato()
         {
-            
-            txtsolicitante.Enabled = false;
-            txtdescription.Enabled = false;
-            txtObservaciones.Enabled = true;
-            dtFechasolicitan.Enabled = false;
-            txtDiasTabla.Enabled = false;
-            txtDiasTotales.Enabled = false;
-            cmbcomprador2.Enabled = false;
-            cmbestatus.Enabled = false;
-            txtIdRFQ.Enabled = false;
-            txtIdRFQ.Visible = false;
-            dtCotizacion.Enabled = false;
-            lnkTabla.Visible = false;
-            btnCambiar.Text = "Cambiar";
 
-
-            if (cmbestatus.SelectedValue.ToString() == "1" )
-            {
-                cmbtipo.Enabled = Enabled;
-                btnCambiaEstatus.Text = "Cotizar";
-                btnCambiaEstatus.Visible = true;
-                btnCambiar.Visible = true;
-                btnCancelar.Visible = true;
-                dtFechaTabla.Visible = false;
-                dtCotizacion.Visible = false;
-                txtDiasTabla.Visible = false;
-                txtMonto.Visible = false;
-                label1.Visible = false;
-                label10.Visible = false;
-                label13.Visible = false;
-                label11.Visible = false;
-            }
-            if (cmbestatus.SelectedValue.ToString() == "1" && validacion==1)
-            {
-                cmbtipo.Enabled = false;
-                txtObservaciones.Enabled = false;
-            }
-            //if (cmbestatus.SelectedValue.ToString() == "1" && usuario== 4)
-            //{
-            //    cmbcomprador2.Enabled = true;
-            //}
-
-
-
-            if (cmbestatus.SelectedValue.ToString() == "2")
-            {
-                btnCambiaEstatus.Text = "Tabla Comparativa";
-                dtFechaTabla.Visible = false;
-                dtCotizacion.Visible = true;
-                txtDiasTabla.Visible = false;
-                txtMonto.Visible = true;
-                label1.Visible = true;
-                label10.Visible = false;
-                label13.Visible = false;
-                label11.Visible = true;
-                cmbtipo.Enabled = false;
-                txtMonto.Enabled = true;
-                txtObservaciones.Enabled = true;
-                btnCambiaEstatus.Visible = true;
-                btnCambiar.Visible = true;
-                btnCancelar.Visible = true;
-            }
-
-            if (cmbestatus.SelectedValue.ToString() == "3")
-            {
-                btnCambiaEstatus.Visible = false;
-                dtFechaTabla.Enabled = false;
-                dtFechaTabla.Visible = true;
-                txtDiasTabla.Visible = true;
-                txtMonto.Visible = true;
-                label10.Visible = true;
-                label1.Visible = true;
-                label13.Visible = true;
-                label11.Visible = true;
-                txtMonto.Enabled = false;
-                lnkTabla.Visible = true;
-                dtCotizacion.Visible = true;
-                cmbtipo.Enabled = false;
-            }
-
-            if (cmbestatus.SelectedValue.ToString() == "9")
-                {
-                lnkTabla.Visible = false;
-            }
-
-            if (validacion == 1 && cmbestatus.SelectedValue.ToString() != "3")
-            {
-                btnCambiaEstatus.Visible = false;
-                
-            }
-
-
-            if (validacion == 1 && cmbestatus.SelectedValue.ToString() == "3")
-            {
-                btnCambiaEstatus.Visible = true;
-                btnCambiaEstatus.Text = "Autorizar";
-                cmbtipo.Enabled = false;
-                btnCambiar.Visible = true;
-                btnCambiar.Text = "Rechazar";
-                //btnCancelar.Visible = true;
-            }
-
-           
-
-
-            if (cmbestatus.SelectedValue.ToString() == "9")
-            {
-                btnCambiaEstatus.Visible = false;
-                btnCambiar.Visible = false;
-                btnCancelar.Visible = false;
+            if (validacion == 3)
+            {   btnUpdate.Visible=false;
                 txtsolicitante.Enabled = false;
                 txtdescription.Enabled = false;
-                txtDiasTabla.Enabled = false;
-                txtMonto.Enabled = false;
-                cmbcomprador2.Enabled = false;
-                cmbestatus.Enabled = false;
-                cmbtipo.Enabled = false;
-                txtIdRFQ.Enabled = false;
-                txtIdRFQ.Visible = false;
                 txtObservaciones.Enabled = false;
-                dtFechaTabla.Enabled = false;
+                txtMonto.Enabled=false;
                 dtFechasolicitan.Enabled = false;
-            }
-            else if (cmbestatus.SelectedValue.ToString() == "10" || cmbestatus.SelectedValue.ToString() == "11")
-            {
-                btnCambiaEstatus.Visible = false;
-                btnCambiar.Visible = false;
-                btnCancelar.Visible = false;
-                txtsolicitante.Enabled = false;
-                txtdescription.Enabled = false;
-                txtDiasTabla.Visible = true;
                 txtDiasTabla.Enabled = false;
-                txtMonto.Enabled = false;
+                txtDiasTotales.Enabled = false;
                 cmbcomprador2.Enabled = false;
                 cmbestatus.Enabled = false;
                 cmbtipo.Enabled = false;
-                txtIdRFQ.Enabled = false;
-                txtIdRFQ.Visible = false;
-                txtObservaciones.Enabled = false;
                 dtCotizacion.Enabled = false;
-                dtCotizacion.Visible = true;
+                dtfecha.Enabled = true;
+                dtFechasolicitan.Enabled=false;
                 dtFechaTabla.Enabled = false;
-                dtFechaTabla.Visible = true;
-                dtFechasolicitan.Enabled = false;
-                lnkTabla.Visible = true;
-                label10.Visible = true;
-                label13.Visible = true;
-                label11.Visible = true;
-                txtMonto.Visible = true;
-                label1.Visible = true;
-
-
+                txtIdRFQ.Enabled = false;
+                txtIdRFQ.Visible = false;
+                dtCotizacion.Enabled = false;
+                lnkTabla.Visible = false;
+                lnkRFQ.Visible = false;
+                btnCambiaEstatus.Visible = false;
+                btnCambiar.Visible = false;
+                btnCancelar.Visible = false;
+                txtProvSugerido.Enabled = false;
             }
-            if (validacion == 1 && cmbestatus.SelectedValue.ToString() == "11" && (decimal.Parse(txtMonto.Text) < 5000 && decimal.Parse(txtMonto.Text) > 0))
+            else
             {
-                btnCambiaEstatus.Visible = true;
-                btnCambiaEstatus.Text = "Autorizar";
-                cmbtipo.Enabled = false;
-                btnCambiar.Visible = true;
-                btnCambiar.Text = "Rechazar";
-                //btnCancelar.Visible = true;
-            }
 
+                txtsolicitante.Enabled = false;
+                txtdescription.Enabled = false;
+                txtObservaciones.Enabled = true;
+                dtFechasolicitan.Enabled = false;
+                txtDiasTabla.Enabled = false;
+                txtDiasTotales.Enabled = false;
+                cmbcomprador2.Enabled = false;
+                cmbestatus.Enabled = false;
+                txtIdRFQ.Enabled = false;
+                txtIdRFQ.Visible = false;
+                dtCotizacion.Enabled = false;
+                lnkTabla.Visible = false;
+                btnCambiar.Text = "Cambiar";
+                txtProvSugerido.Enabled = false;
+
+
+                if (cmbestatus.SelectedValue.ToString() == "1")
+                {
+                    cmbtipo.Enabled = Enabled;
+                    btnCambiaEstatus.Text = "Cotizar";
+                    btnCambiaEstatus.Visible = true;
+                    btnCambiar.Visible = true;
+                    btnCancelar.Visible = true;
+                    dtFechaTabla.Visible = false;
+                    dtCotizacion.Visible = false;
+                    txtDiasTabla.Visible = false;
+                    txtMonto.Visible = false;
+                    label1.Visible = false;
+                    label10.Visible = false;
+                    label13.Visible = false;
+                    label11.Visible = false;
+                }
+                if (cmbestatus.SelectedValue.ToString() == "1" && validacion == 1)
+                {
+                    cmbtipo.Enabled = false;
+                    txtObservaciones.Enabled = true;
+                }
+
+                if ((cmbestatus.SelectedValue.ToString() == "1" && int.Parse(this.cmbComprador.SelectedValue.ToString()) == 4) || (cmbestatus.SelectedValue.ToString() == "1" && int.Parse(this.cmbComprador.SelectedValue.ToString()) == 5))
+                {
+                    btnUpdate.Visible = true;
+                    cmbcomprador2.Enabled = true;
+                    txtProvSugerido.Enabled = true;
+                    txtObservaciones.Enabled = true;
+                    cmbtipo.Enabled = true;
+                    txtdescription.Enabled = true;
+                }
+                else
+                {
+                    btnUpdate.Visible = false;
+                    cmbcomprador2.Enabled = false;
+                    txtProvSugerido.Enabled = false;
+                    txtdescription.Enabled = false;
+                }
+
+
+
+                if (cmbestatus.SelectedValue.ToString() == "2")
+                {
+                    btnCambiaEstatus.Text = "Tabla Comparativa";
+                    dtFechaTabla.Visible = false;
+                    dtCotizacion.Visible = true;
+                    txtDiasTabla.Visible = false;
+                    txtMonto.Visible = true;
+                    label1.Visible = true;
+                    label10.Visible = false;
+                    label13.Visible = false;
+                    label11.Visible = true;
+                    cmbtipo.Enabled = false;
+                    txtMonto.Enabled = true;
+                    txtObservaciones.Enabled = true;
+                    btnCambiaEstatus.Visible = true;
+                    btnCambiar.Visible = true;
+                    btnCancelar.Visible = true;
+                }
+
+                if (cmbestatus.SelectedValue.ToString() == "3")
+                {
+                    btnCambiaEstatus.Visible = false;
+                    dtFechaTabla.Enabled = false;
+                    dtFechaTabla.Visible = true;
+                    txtDiasTabla.Visible = true;
+                    txtMonto.Visible = true;
+                    label10.Visible = true;
+                    label1.Visible = true;
+                    label13.Visible = true;
+                    label11.Visible = true;
+                    txtMonto.Enabled = false;
+                    lnkTabla.Visible = true;
+                    dtCotizacion.Visible = true;
+                    cmbtipo.Enabled = false;
+                    txtObservaciones.Enabled = true;
+                }
+
+                if (cmbestatus.SelectedValue.ToString() == "9")
+                {
+                    lnkTabla.Visible = false;
+                }
+
+                if (validacion == 1 && cmbestatus.SelectedValue.ToString() != "3")
+                {
+                    btnCambiaEstatus.Visible = false;
+
+                }
+
+
+                if (validacion == 1 && cmbestatus.SelectedValue.ToString() == "3" )
+                {
+                    btnCambiaEstatus.Visible = true;
+                    btnCambiaEstatus.Text = "Autorizar";
+                    cmbtipo.Enabled = false;
+                    btnCambiar.Visible = true;
+                    btnCambiar.Text = "Rechazar";
+                    //btnCancelar.Visible = true;
+                }
+
+
+
+
+                if (cmbestatus.SelectedValue.ToString() == "9")
+                {
+                    btnCambiaEstatus.Visible = false;
+                    btnCambiar.Visible = false;
+                    btnCancelar.Visible = false;
+                    txtsolicitante.Enabled = false;
+                    txtdescription.Enabled = false;
+                    txtDiasTabla.Enabled = false;
+                    txtMonto.Enabled = false;
+                    cmbcomprador2.Enabled = false;
+                    cmbestatus.Enabled = false;
+                    cmbtipo.Enabled = false;
+                    txtIdRFQ.Enabled = false;
+                    txtIdRFQ.Visible = false;
+                    txtObservaciones.Enabled = false;
+                    dtFechaTabla.Enabled = false;
+                    dtFechasolicitan.Enabled = false;
+                }
+                else if (cmbestatus.SelectedValue.ToString() == "10")
+                {
+                    btnCambiaEstatus.Visible = false;
+                    btnCambiar.Visible = false;
+                    btnCancelar.Visible = false;
+                    txtsolicitante.Enabled = false;
+                    txtdescription.Enabled = false;
+                    txtDiasTabla.Visible = true;
+                    txtDiasTabla.Enabled = false;
+                    txtMonto.Enabled = false;
+                    cmbcomprador2.Enabled = false;
+                    cmbestatus.Enabled = false;
+                    cmbtipo.Enabled = false;
+                    txtIdRFQ.Enabled = false;
+                    txtIdRFQ.Visible = false;
+                    txtObservaciones.Enabled = false;
+                    dtCotizacion.Enabled = false;
+                    dtCotizacion.Visible = true;
+                    dtFechaTabla.Enabled = false;
+                    dtFechaTabla.Visible = true;
+                    dtFechasolicitan.Enabled = false;
+                    lnkTabla.Visible = true;
+                    label10.Visible = true;
+                    label13.Visible = true;
+                    label11.Visible = true;
+                    txtMonto.Visible = true;
+                    label1.Visible = true;
+
+
+                }
+                if (validacion == 1 && cmbestatus.SelectedValue.ToString() == "11" && (decimal.Parse(txtMonto.Text) <= 5000 && decimal.Parse(txtMonto.Text) > 0))
+                {
+                    btnCambiaEstatus.Visible = true;
+                    btnCambiaEstatus.Text = "Autorizar";
+                    cmbtipo.Enabled = false;
+                    btnCambiar.Visible = true;
+                    btnCambiar.Text = "Rechazar";
+                    //btnCancelar.Visible = true;
+                }
+
+                if (validacion == 2 && cmbestatus.SelectedValue.ToString() == "11" && (decimal.Parse(txtMonto.Text) <= 5000 && decimal.Parse(txtMonto.Text) > 0))
+                { cmbtipo.Enabled = false;
+                    btnCambiaEstatus.Visible = false;
+                    btnCambiar.Visible = false;
+                    btnCancelar.Visible = false;
+                }
+            }
         }
 
         private static List<Listas.Detalles> busquedaint(int id)
@@ -417,7 +477,7 @@ namespace RFQCompras
 
                 while (Lector.Read())
                 {
-                    frmPrincipal.listaDetalles.Add(new Listas.Detalles { IdRfq = Lector.GetInt32(0), Comprador = Lector.GetInt32(3), Estatus = Lector.GetInt32(4),Tipo=Lector.GetInt32(5), DiasTotales = Lector.GetInt32(8), DiasTabla = Lector.GetInt32(9), Monto = Lector.GetDecimal(10), Desripcion = Lector.GetString(1), Solicitante = Lector.GetString(2), FechaSolicitud = Lector.GetDateTime(6), FechaTabla = Lector.GetDateTime(7), Observaciones = Lector.GetString(11),FechaCotizacion = Lector.GetDateTime(12), lnkRfq=Lector.GetString(13),lnkTabla=Lector.GetString(14),email = Lector.GetString(15) });
+                    frmPrincipal.listaDetalles.Add(new Listas.Detalles { IdRfq = Lector.GetInt32(0), Comprador = Lector.GetInt32(3), Estatus = Lector.GetInt32(4),Tipo=Lector.GetInt32(5), DiasTotales = Lector.GetInt32(8), DiasTabla = Lector.GetInt32(9), Monto = Lector.GetDecimal(10), Desripcion = Lector.GetString(1), Solicitante = Lector.GetString(2), FechaSolicitud = Lector.GetDateTime(6), FechaTabla = Lector.GetDateTime(7), Observaciones = Lector.GetString(11),FechaCotizacion = Lector.GetDateTime(12), lnkRfq=Lector.GetString(13),lnkTabla=Lector.GetString(14),email = Lector.GetString(15),ProvSugerido= Lector.GetString(16) });
                 }
 
                 Lector.Close();
@@ -463,7 +523,7 @@ namespace RFQCompras
                 myForm.MaximizeBox = false;
                 resultado = myForm.resultado;
             }
-            else if (valor < 5000 && cmbestatus.SelectedValue.ToString() == "2")
+            else if (valor <= 5000 && cmbestatus.SelectedValue.ToString() == "2")
             {
                 resultado = 0;
                 CargarDocumento myForm = new CargarDocumento(this.txtdescription.Text, int.Parse(this.txtIdRFQ.Text), 2);
@@ -499,7 +559,7 @@ namespace RFQCompras
 
 
                 }
-
+                 
 
                 if (cmbestatus.SelectedValue.ToString()=="11" || cmbestatus.SelectedValue.ToString() == "3")
                 {
@@ -555,6 +615,7 @@ namespace RFQCompras
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+
             using (SqlConnection conn1 = new SqlConnection(ConnectionString))
             {
                 conn1.Open();
@@ -565,14 +626,29 @@ namespace RFQCompras
                 cmd.Parameters.AddWithValue("@opcion", 1);
                 cmd.ExecuteNonQuery();
             }
+
+            try
+            {
+                Proc.enviocorreo(2, "",txtsolicitante.Text, "del RFQ " + txtIdRFQ.Text + " ha sido cancelado favor de contactar al personal del área de compras", "");
+                MessageBox.Show("Email enviado correctamente", "Succesfull", MessageBoxButtons.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al enviar el correo electrónico: " + ex.Message);
+            }
+
+
             btnActualizar_Click_1(this, e);
             Dato = int.Parse(txtIdRFQ.Text);
             rfq_clickdato(this, e);
+
+
         }
 
         private void btnCambiar_Click(object sender, EventArgs e)
         {
             int opcion = 2;
+           
             if (cmbestatus.SelectedValue.ToString() == "3" || cmbestatus.SelectedValue.ToString() == "11")
             {
                 opcion = 3;
@@ -612,17 +688,44 @@ namespace RFQCompras
 
         }
 
-    
-
-        private void cmbcomprador2_SelectedValueChanged_1(object sender, EventArgs e)
+        private void btnUpdate_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Prueba", "Prueba", MessageBoxButtons.OK);
-        }
+            if (cmbcomprador2.SelectedItem == null)
+            {
+                MessageBox.Show("Favor de seleccionar un comprador", "Warning", MessageBoxButtons.OK);
+                return;
+            }
 
-        private void btnHistorial_Click(object sender, EventArgs e)
+            if (string.IsNullOrEmpty(txtdescription.Text))
+            {
+                MessageBox.Show("Favor de capturar una descripción", "Warning", MessageBoxButtons.OK);
+                return;
+                 
+            }
+
+            using (SqlConnection conn1 = new SqlConnection(ConnectionString))
+            {
+                conn1.Open();
+                SqlCommand cmd = new SqlCommand("dbo.UpdateInfo", conn1);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@idrfq", int.Parse(txtIdRFQ.Text));
+                cmd.Parameters.AddWithValue("@descripcion", txtdescription.Text);
+                cmd.Parameters.AddWithValue("@Observaciones", txtObservaciones.Text);
+                cmd.Parameters.AddWithValue("@Proveedor", txtProvSugerido.Text);
+                cmd.Parameters.AddWithValue("@idcomprador", cmbcomprador2.SelectedValue);
+                cmd.Parameters.AddWithValue("@idtipo", cmbtipo.SelectedValue);
+                cmd.ExecuteNonQuery();
+
+
+            }
+
+
+        }
+            private void btnHistorial_Click(object sender, EventArgs e)
         {
            
-            frmhistorial myForm = new frmhistorial(usuario,DateTime.Now);
+            frmhistorial myForm = new frmhistorial(usuario,DateTime.Now,_usuario);
             myForm.Text = "Historico";
             myForm.AutoSize = false;
             myForm.AutoSizeMode = AutoSizeMode.GrowAndShrink;

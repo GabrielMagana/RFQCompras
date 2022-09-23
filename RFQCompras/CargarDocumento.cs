@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RFQCompras
@@ -20,14 +14,21 @@ namespace RFQCompras
         public int resultado { get; set; }
 
         public static string ConnectionString = ConfigurationManager.AppSettings["ConexionDB"];
-        public static string Ruta = ConfigurationManager.AppSettings["rutaTabla"];
-        public static string RutaCot = ConfigurationManager.AppSettings["rutaCotizacion"];
-        public CargarDocumento(string descripcion, int idrfq,int esTabla)
+        public static string Ruta; //= ConfigurationManager.AppSettings["rutaTabla"];
+        public static string RutaCot;// = ConfigurationManager.AppSettings["rutaCotizacion"];
+        DataTable dt = new DataTable();
+
+        public CargarDocumento(string descripcion, int idrfq, int esTabla)
         {
             InitializeComponent();
             _descripcion = descripcion;
             _idrfq = idrfq;
             _establa = esTabla;
+
+
+            dt = Proc.ObtenerConfiguraciones(3);
+            Ruta = dt.Rows[0]["Valor1"].ToString();
+            RutaCot = dt.Rows[0]["Valor1"].ToString();
 
             this.flowLayoutPanel1.Controls.Clear();
 
@@ -47,19 +48,19 @@ namespace RFQCompras
             this.Close();
             return;
         }
-        
+
         private void guardar_click(object sender, EventArgs e)
         {
             string RutaFin;
             string filName;
             string xtName;
-            string destinotabla="";
-        
+            string destinotabla = "";
+
 #pragma warning disable CS1717 // Assignment made to same variable; did you mean to assign something else?
-            Ruta = Ruta ;
+            Ruta = Ruta;
 #pragma warning restore CS1717 // Assignment made to same variable; did you mean to assign something else?
 #pragma warning disable CS1717 // Assignment made to same variable; did you mean to assign something else?
-           RutaCot = RutaCot;
+            RutaCot = RutaCot;
 #pragma warning restore CS1717 // Assignment made to same variable; did you mean to assign something else?
 
 
@@ -72,22 +73,22 @@ namespace RFQCompras
                 RutaFin = RutaCot;
             }
 
-         
+
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "All (*.*)|*.*";
             //Restaurar la ventana despues del open fileDialog
             ofd.RestoreDirectory = true;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-          
+
                 filName = ofd.FileName;
-                xtName= Path.GetExtension(ofd.FileName);
-                
-                txtruta.Text = filName;   
+                xtName = Path.GetExtension(ofd.FileName);
+
+                txtruta.Text = filName;
                 //nombre = ofd;
-                  
+
                 //Copia del archivo
-                string destino = Path.Combine(Application.StartupPath, String.Format(RutaFin+"\\"+_descripcion+xtName, Path.GetFileName(ofd.FileName)));
+                string destino = Path.Combine(Application.StartupPath, String.Format(RutaFin.Trim() + "\\" + _idrfq.ToString() + xtName, Path.GetFileName(ofd.FileName)));
                 destinotabla = destino;
                 File.Copy(ofd.FileName, destino);
 
@@ -97,7 +98,7 @@ namespace RFQCompras
                     SqlCommand cmd = new SqlCommand("Update [dbo].[RFQ_Detalle] set [RutaTabla] = '" + destinotabla + "' where idRfq=" + _idrfq.ToString(), conn1);
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery();
-                } 
+                }
 
                 MessageBox.Show("Se realizo la carga de manera exitosa", "Confirmación", MessageBoxButtons.OK);
                 resultado = 1;
@@ -112,7 +113,7 @@ namespace RFQCompras
                     MessageBox.Show("Ocurrió un error al enviar el correo electrónico: " + ex.Message);
                 }
             }
-            
+
 
 
 
@@ -129,7 +130,7 @@ namespace RFQCompras
         {
             UploadTabla tabla = new UploadTabla();
 
-            tabla.Descripcion=  _descripcion;
+            tabla.Descripcion = _descripcion;
             tabla.IDRFQ = _idrfq;
         }
     }

@@ -51,6 +51,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -68,6 +69,24 @@
     </Compile>
     <Compile Include="CargarDocumento.Designer.cs">
       <DependentUpon>CargarDocumento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmrLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fmrLogin.designer.cs">
+      <DependentUpon>fmrLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCaptura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCaptura.Designer.cs">
+      <DependentUpon>frmCaptura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCatalogo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCatalogo.Designer.cs">
+      <DependentUpon>frmCatalogo.cs</DependentUpon>
     </Compile>
     <Compile Include="frmhistorial.cs">
       <SubType>Form</SubType>
@@ -105,6 +124,12 @@
     </Compile>
     <EmbeddedResource Include="CargarDocumento.resx">
       <DependentUpon>CargarDocumento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fmrLogin.resx">
+      <DependentUpon>fmrLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCaptura.resx">
+      <DependentUpon>frmCaptura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmhistorial.resx">
       <DependentUpon>frmhistorial.cs</DependentUpon>
@@ -157,7 +182,7 @@
     <None Include="Resources\1485969921-5-refresh_78908.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Managerfiles_historyfiles_administradordearchivos_6225.png" />
+    <EmbeddedResource Include="Resources\Managerfiles_historyfiles_administradordearchivos_6225.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -170,6 +195,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icono.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

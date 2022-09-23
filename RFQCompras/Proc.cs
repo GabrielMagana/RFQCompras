@@ -19,9 +19,9 @@ namespace RFQCompras
     {
         public static string ConnectionString = ConfigurationManager.AppSettings["ConexionDB"];
         public static string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-        public static string emailsupervisor = ConfigurationManager.AppSettings["emailsupervisor"];
-        public static string MailNotify = ConfigurationManager.AppSettings["CorreoNotif"];
-        public static string pass = ConfigurationManager.AppSettings["pass"];
+        public static string emailsupervisor;
+        public static string MailNotify;
+        public static string pass;
 
         string Pc = Environment.MachineName;
         public static void combos(ComboBox obj,int opcion)
@@ -47,46 +47,88 @@ namespace RFQCompras
 
         }
 
-        public static int ValidarUsuarios(int opcion)
-        { int Validacion=0, usuario = 0;
-            
-            string query = "select case when substring(email,1,CHARINDEX('@',email)-1) = 'loza.m' OR substring(email,1,CHARINDEX('@',email)-1) = 'guerrero.a'then 1 else 2 end, idUsuario " +
-                           "from CatUsuarios with(nolock) where substring(email, 1, CHARINDEX('@', email) - 1) = substring('"+ userName + "', CHARINDEX('\\', '"+ userName + "') + 1, len('"+ userName + "') - CHARINDEX('\\', '" + userName + "'))";
+        public static DataTable ObtenerConfiguraciones(int configuracion)
+        {
+            DataTable config = new DataTable();
+
             using (SqlConnection conn1 = new SqlConnection(ConnectionString))
             {
                 conn1.Open();
-                SqlCommand cmd = new SqlCommand(query, conn1);
-                cmd.CommandType = CommandType.Text;
+                SqlCommand cmd = new SqlCommand("dbo.ConfiguracionSel", conn1);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                SqlDataReader Lector = cmd.ExecuteReader();
+                cmd.Parameters.AddWithValue("@Configuracion", configuracion);
 
-                while (Lector.Read())
-                {
-                    Validacion = int.Parse(Lector[0].ToString());
-                    usuario = int.Parse(Lector[1].ToString());
-                }
-               
+                SqlDataAdapter Lector = new SqlDataAdapter(cmd);
+                Lector.Fill(config);
 
             }
 
-            if (opcion == 1)
-                { return Validacion; }
-            else { return usuario; }
+
+            return config;
+        }
+
+
+
+
+        public static DataTable ValidarUsuarios(string opcion)
+        { int Validacion=0, usuario = 0;
+            DataTable perm = new DataTable();
+
+
+            using (SqlConnection conn1 = new SqlConnection(ConnectionString))
+            {
+                conn1.Open();
+                SqlCommand cmd = new SqlCommand("dbo.ProcValidacion", conn1);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@email", opcion);
+
+                SqlDataAdapter Lector = new SqlDataAdapter(cmd);
+                Lector.Fill(perm);
+
+            }
+            return perm;
             
         }
 
         public static void enviarcorreos(string  subject, string body, int opcion, string correo, string attachment )
         {
+            string Destinatario, Servidor;
+            int Puerto;
+            DataTable Correo = new DataTable();
+            DataTable Supervisor = new DataTable();
 
-            if (opcion !=1)
+
+            Correo = ObtenerConfiguraciones(1);
+
+            Supervisor = ObtenerConfiguraciones(2);
+
+
+            emailsupervisor = Supervisor.Rows[0]["Valor1"].ToString().Trim();
+
+            MailNotify = Correo.Rows[0]["Valor2"].ToString().Trim();
+            pass = Correo.Rows[0]["Valor3"].ToString().Trim();
+
+            Servidor = Correo.Rows[0]["Valor1"].ToString().Trim();
+            Puerto = int.Parse(Correo.Rows[0]["Valor1Num"].ToString().Trim());
+
+
+
+
+            if (opcion == 1)
             {
-                emailsupervisor = correo; //aprobación 
-            }         
+                Destinatario = emailsupervisor; //aprobación 
+            }
+            else
+            {
+                Destinatario = correo;
+            }
 
 
             MailMessage Mensaje = new MailMessage();
 
-            Mensaje.To.Add(new MailAddress(emailsupervisor));
+            Mensaje.To.Add(new MailAddress(Destinatario));
             Mensaje.From = new MailAddress(MailNotify);
             Mensaje.Subject = subject;
             Mensaje.Body = body;
@@ -96,11 +138,11 @@ namespace RFQCompras
                 Mensaje.Attachments.Add(data); }
 
 
-            SmtpClient ClienteSMTP = new SmtpClient("smtp.office365.com", 587);
+            SmtpClient ClienteSMTP = new SmtpClient(Servidor, Puerto);
 
             ClienteSMTP.EnableSsl = true;
 
-            NetworkCredential credentials = new NetworkCredential(MailNotify, "Mazda2020", "");
+            NetworkCredential credentials = new NetworkCredential(MailNotify, pass, "");
             ClienteSMTP.Credentials = credentials;
 
 
@@ -135,7 +177,7 @@ namespace RFQCompras
             }
             if (opcion1 == 2)
             {
-                description = "Rechazo de tabla comparativa o cotización: " + titulo; //cancelacion
+                description = "Rechazo de tabla comparativa o cotización"; //cancelacion
                 opcion = 2;
                 body = "La tabla comparativa o la cotización " + titulo + " fue rechazada"; //cancelacion
                 correo = correos;

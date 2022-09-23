@@ -18,22 +18,34 @@ namespace RFQCompras
     {
         int _comprador; DateTime _fecha;
         public int  validacion, usuario;
+        string _usuario;
         public static string ConnectionString = ConfigurationManager.AppSettings["ConexionDB"];
-
-        public frmhistorial(int comprador, DateTime fecha)
+        DataTable permisos = new DataTable();
+        public frmhistorial(int comprador, DateTime fecha,string Usuario)
         {
+            int opcion; 
             InitializeComponent();
             _comprador = comprador;
             _fecha = fecha;
+            _usuario = Usuario;
 
-            Proc.combos(cmbComprador,3);
+            permisos = Proc.ValidarUsuarios(_usuario);
+
+            validacion = int.Parse(permisos.Rows[0]["permiso"].ToString().Trim());
+            usuario = int.Parse(permisos.Rows[0]["idusuario"].ToString().Trim());
+
+            if (validacion == 2 || validacion == 1 || validacion == 4)
+            { opcion = 3; }
+            else { opcion = 4; }
+            
+            Proc.combos(cmbComprador, opcion);
+
             cmbComprador.SelectedValue = comprador;
-            validacion = 2;// Proc.ValidarUsuarios(1);
-            usuario = 4;//Proc.ValidarUsuarios(2);
             _comprador = usuario;
             cmbComprador.SelectedValue = usuario;
             if (validacion != 1)
-            { cmbComprador.Enabled = false; }
+            { cmbComprador.Enabled = false;
+            }
         }
 
         private void frmhistorial_Load(object sender, EventArgs e)
@@ -130,7 +142,7 @@ namespace RFQCompras
             //DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
             foreach (DataGridViewRow row in dgvHistorico.Rows)
             {
-                for (int i= 0; i<dgvHistorico.Columns.Count; i++)
+                for (int i = 0; i < dgvHistorico.Columns.Count; i++)
                 {
                     if (i == 15 || i == 16)
                     {
@@ -141,9 +153,14 @@ namespace RFQCompras
                 }
             }
 
+            if (validacion == 3)
+            {
+                dgvHistorico.Columns[14].Visible = false;
+                dgvHistorico.Columns[15].Visible = false;
+                dgvHistorico.Columns[16].Visible = false;
 
+            }
         }
-
         private void dgvHistorico_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             string ruta="";

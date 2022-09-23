@@ -30,7 +30,10 @@ namespace RFQCompras
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.ucListado1 = new RFQCompras.ucListado();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtProvSugerido = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.lnkTabla = new System.Windows.Forms.LinkLabel();
             this.lnkRFQ = new System.Windows.Forms.LinkLabel();
             this.dtCotizacion = new System.Windows.Forms.DateTimePicker();
@@ -62,6 +65,7 @@ namespace RFQCompras
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.dtfecha = new System.Windows.Forms.DateTimePicker();
             this.label14 = new System.Windows.Forms.Label();
             this.btnHistorial = new System.Windows.Forms.Button();
@@ -69,7 +73,6 @@ namespace RFQCompras
             this.cmbComprador = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.ucListado1 = new RFQCompras.ucListado();
             this.ucDetails1 = new RFQCompras.ucDetails();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -79,17 +82,36 @@ namespace RFQCompras
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Controls.Add(this.ucListado1);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 68);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(272, 382);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(272, 591);
             this.flowLayoutPanel1.TabIndex = 2;
+            // 
+            // ucListado1
+            // 
+            this.ucListado1.Area = null;
+            this.ucListado1.BackColor = System.Drawing.Color.Gainsboro;
+            this.ucListado1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucListado1.Descripcion = null;
+            this.ucListado1.Estatus = null;
+            this.ucListado1.IDRFQ = 0;
+            this.ucListado1.Location = new System.Drawing.Point(3, 3);
+            this.ucListado1.Name = "ucListado1";
+            this.ucListado1.Size = new System.Drawing.Size(257, 118);
+            this.ucListado1.Solicitante = null;
+            this.ucListado1.TabIndex = 1;
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.AutoSize = true;
+            this.groupBox2.Controls.Add(this.txtProvSugerido);
+            this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.lnkTabla);
             this.groupBox2.Controls.Add(this.lnkRFQ);
             this.groupBox2.Controls.Add(this.dtCotizacion);
@@ -120,22 +142,40 @@ namespace RFQCompras
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBox2.Location = new System.Drawing.Point(278, 68);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(522, 382);
+            this.groupBox2.Size = new System.Drawing.Size(694, 604);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Detalles";
             // 
+            // txtProvSugerido
+            // 
+            this.txtProvSugerido.Location = new System.Drawing.Point(9, 249);
+            this.txtProvSugerido.Multiline = true;
+            this.txtProvSugerido.Name = "txtProvSugerido";
+            this.txtProvSugerido.Size = new System.Drawing.Size(388, 58);
+            this.txtProvSugerido.TabIndex = 32;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(8, 230);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(132, 16);
+            this.label2.TabIndex = 31;
+            this.label2.Text = "Proveedor Sugerido:";
+            // 
             // lnkTabla
             // 
             this.lnkTabla.AutoSize = true;
-            this.lnkTabla.Location = new System.Drawing.Point(4, 321);
+            this.lnkTabla.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkTabla.Location = new System.Drawing.Point(18, 564);
             this.lnkTabla.Name = "lnkTabla";
-            this.lnkTabla.Size = new System.Drawing.Size(99, 13);
+            this.lnkTabla.Size = new System.Drawing.Size(126, 16);
             this.lnkTabla.TabIndex = 30;
             this.lnkTabla.TabStop = true;
             this.lnkTabla.Text = "Tabla Comparativa.";
@@ -144,9 +184,10 @@ namespace RFQCompras
             // lnkRFQ
             // 
             this.lnkRFQ.AutoSize = true;
-            this.lnkRFQ.Location = new System.Drawing.Point(4, 292);
+            this.lnkRFQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkRFQ.Location = new System.Drawing.Point(18, 535);
             this.lnkRFQ.Name = "lnkRFQ";
-            this.lnkRFQ.Size = new System.Drawing.Size(29, 13);
+            this.lnkRFQ.Size = new System.Drawing.Size(35, 16);
             this.lnkRFQ.TabIndex = 29;
             this.lnkRFQ.TabStop = true;
             this.lnkRFQ.Text = "RFQ";
@@ -155,7 +196,7 @@ namespace RFQCompras
             // dtCotizacion
             // 
             this.dtCotizacion.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtCotizacion.Location = new System.Drawing.Point(158, 154);
+            this.dtCotizacion.Location = new System.Drawing.Point(160, 351);
             this.dtCotizacion.Name = "dtCotizacion";
             this.dtCotizacion.Size = new System.Drawing.Size(145, 20);
             this.dtCotizacion.TabIndex = 28;
@@ -163,16 +204,17 @@ namespace RFQCompras
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(155, 136);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(157, 333);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 13);
+            this.label1.Size = new System.Drawing.Size(113, 16);
             this.label1.TabIndex = 27;
             this.label1.Text = "Fecha Cotización:";
             // 
             // txtIdRFQ
             // 
             this.txtIdRFQ.Enabled = false;
-            this.txtIdRFQ.Location = new System.Drawing.Point(37, 19);
+            this.txtIdRFQ.Location = new System.Drawing.Point(54, 7);
             this.txtIdRFQ.Name = "txtIdRFQ";
             this.txtIdRFQ.Size = new System.Drawing.Size(100, 20);
             this.txtIdRFQ.TabIndex = 26;
@@ -181,34 +223,33 @@ namespace RFQCompras
             // cmbcomprador2
             // 
             this.cmbcomprador2.FormattingEnabled = true;
-            this.cmbcomprador2.Location = new System.Drawing.Point(158, 55);
+            this.cmbcomprador2.Location = new System.Drawing.Point(222, 63);
             this.cmbcomprador2.Name = "cmbcomprador2";
-            this.cmbcomprador2.Size = new System.Drawing.Size(145, 21);
+            this.cmbcomprador2.Size = new System.Drawing.Size(187, 21);
             this.cmbcomprador2.TabIndex = 6;
-            this.cmbcomprador2.SelectedValueChanged += new System.EventHandler(this.cmbcomprador2_SelectedValueChanged_1);
             // 
             // cmbestatus
             // 
             this.cmbestatus.FormattingEnabled = true;
-            this.cmbestatus.Location = new System.Drawing.Point(309, 55);
+            this.cmbestatus.Location = new System.Drawing.Point(415, 63);
             this.cmbestatus.Name = "cmbestatus";
-            this.cmbestatus.Size = new System.Drawing.Size(115, 21);
+            this.cmbestatus.Size = new System.Drawing.Size(138, 21);
             this.cmbestatus.TabIndex = 25;
             // 
             // btnCambiaEstatus
             // 
-            this.btnCambiaEstatus.Location = new System.Drawing.Point(92, 337);
+            this.btnCambiaEstatus.Location = new System.Drawing.Point(252, 541);
             this.btnCambiaEstatus.Name = "btnCambiaEstatus";
-            this.btnCambiaEstatus.Size = new System.Drawing.Size(137, 30);
+            this.btnCambiaEstatus.Size = new System.Drawing.Size(137, 44);
             this.btnCambiaEstatus.TabIndex = 24;
             this.btnCambiaEstatus.UseVisualStyleBackColor = true;
             this.btnCambiaEstatus.Click += new System.EventHandler(this.btnCambiaEstatus_Click);
             // 
             // btnCambiar
             // 
-            this.btnCambiar.Location = new System.Drawing.Point(235, 337);
+            this.btnCambiar.Location = new System.Drawing.Point(395, 541);
             this.btnCambiar.Name = "btnCambiar";
-            this.btnCambiar.Size = new System.Drawing.Size(137, 30);
+            this.btnCambiar.Size = new System.Drawing.Size(137, 44);
             this.btnCambiar.TabIndex = 23;
             this.btnCambiar.Text = "Cambiar RFQ";
             this.btnCambiar.UseVisualStyleBackColor = true;
@@ -216,9 +257,9 @@ namespace RFQCompras
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(378, 337);
+            this.btnCancelar.Location = new System.Drawing.Point(538, 541);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(137, 30);
+            this.btnCancelar.Size = new System.Drawing.Size(137, 44);
             this.btnCancelar.TabIndex = 22;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -227,7 +268,7 @@ namespace RFQCompras
             // dtFechaTabla
             // 
             this.dtFechaTabla.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtFechaTabla.Location = new System.Drawing.Point(7, 195);
+            this.dtFechaTabla.Location = new System.Drawing.Point(9, 392);
             this.dtFechaTabla.Name = "dtFechaTabla";
             this.dtFechaTabla.Size = new System.Drawing.Size(145, 20);
             this.dtFechaTabla.TabIndex = 21;
@@ -235,32 +276,34 @@ namespace RFQCompras
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 177);
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(8, 374);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(131, 13);
+            this.label13.Size = new System.Drawing.Size(165, 16);
             this.label13.TabIndex = 20;
             this.label13.Text = "Fecha Tabla comparativa:";
             // 
             // txtObservaciones
             // 
-            this.txtObservaciones.Location = new System.Drawing.Point(7, 245);
+            this.txtObservaciones.Location = new System.Drawing.Point(9, 450);
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.Size = new System.Drawing.Size(509, 31);
+            this.txtObservaciones.Size = new System.Drawing.Size(666, 67);
             this.txtObservaciones.TabIndex = 19;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 222);
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(8, 429);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(81, 13);
+            this.label12.Size = new System.Drawing.Size(112, 18);
             this.label12.TabIndex = 18;
             this.label12.Text = "Observaciones:";
             // 
             // txtMonto
             // 
-            this.txtMonto.Location = new System.Drawing.Point(309, 154);
+            this.txtMonto.Location = new System.Drawing.Point(311, 351);
             this.txtMonto.Name = "txtMonto";
             this.txtMonto.Size = new System.Drawing.Size(86, 20);
             this.txtMonto.TabIndex = 17;
@@ -270,22 +313,23 @@ namespace RFQCompras
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(306, 136);
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(308, 333);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(55, 13);
+            this.label11.Size = new System.Drawing.Size(65, 16);
             this.label11.TabIndex = 16;
             this.label11.Text = "Monto ($):";
             // 
             // txtDiasTabla
             // 
-            this.txtDiasTabla.Location = new System.Drawing.Point(418, 195);
+            this.txtDiasTabla.Location = new System.Drawing.Point(552, 249);
             this.txtDiasTabla.Name = "txtDiasTabla";
             this.txtDiasTabla.Size = new System.Drawing.Size(86, 20);
             this.txtDiasTabla.TabIndex = 15;
             // 
             // txtDiasTotales
             // 
-            this.txtDiasTotales.Location = new System.Drawing.Point(416, 154);
+            this.txtDiasTotales.Location = new System.Drawing.Point(415, 249);
             this.txtDiasTotales.Name = "txtDiasTotales";
             this.txtDiasTotales.Size = new System.Drawing.Size(86, 20);
             this.txtDiasTotales.TabIndex = 14;
@@ -293,25 +337,27 @@ namespace RFQCompras
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(415, 177);
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(561, 230);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(61, 13);
+            this.label10.Size = new System.Drawing.Size(77, 16);
             this.label10.TabIndex = 13;
             this.label10.Text = "Dias Tabla:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(415, 136);
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(412, 230);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(69, 13);
+            this.label9.Size = new System.Drawing.Size(87, 16);
             this.label9.TabIndex = 12;
             this.label9.Text = "Dias Totales:";
             // 
             // dtFechasolicitan
             // 
             this.dtFechasolicitan.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtFechasolicitan.Location = new System.Drawing.Point(7, 154);
+            this.dtFechasolicitan.Location = new System.Drawing.Point(9, 351);
             this.dtFechasolicitan.Name = "dtFechasolicitan";
             this.dtFechasolicitan.Size = new System.Drawing.Size(145, 20);
             this.dtFechasolicitan.TabIndex = 11;
@@ -319,83 +365,92 @@ namespace RFQCompras
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 136);
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(8, 333);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(81, 13);
+            this.label8.Size = new System.Drawing.Size(100, 16);
             this.label8.TabIndex = 10;
             this.label8.Text = "Fecha solicitud:";
             // 
             // txtdescription
             // 
-            this.txtdescription.Location = new System.Drawing.Point(7, 94);
+            this.txtdescription.Location = new System.Drawing.Point(9, 132);
             this.txtdescription.Multiline = true;
             this.txtdescription.Name = "txtdescription";
-            this.txtdescription.Size = new System.Drawing.Size(509, 35);
+            this.txtdescription.Size = new System.Drawing.Size(666, 84);
             this.txtdescription.TabIndex = 9;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 78);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(6, 113);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(66, 13);
+            this.label7.Size = new System.Drawing.Size(82, 16);
             this.label7.TabIndex = 8;
             this.label7.Text = "Descripción:";
             // 
             // cmbtipo
             // 
             this.cmbtipo.FormattingEnabled = true;
-            this.cmbtipo.Location = new System.Drawing.Point(430, 55);
+            this.cmbtipo.Location = new System.Drawing.Point(565, 63);
             this.cmbtipo.Name = "cmbtipo";
-            this.cmbtipo.Size = new System.Drawing.Size(86, 21);
+            this.cmbtipo.Size = new System.Drawing.Size(110, 21);
             this.cmbtipo.TabIndex = 6;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(427, 30);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(561, 30);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(28, 13);
+            this.label6.Size = new System.Drawing.Size(35, 16);
             this.label6.TabIndex = 7;
             this.label6.Text = "Tipo";
             // 
             // txtsolicitante
             // 
-            this.txtsolicitante.Location = new System.Drawing.Point(7, 55);
+            this.txtsolicitante.Location = new System.Drawing.Point(6, 64);
             this.txtsolicitante.Name = "txtsolicitante";
-            this.txtsolicitante.Size = new System.Drawing.Size(145, 20);
+            this.txtsolicitante.Size = new System.Drawing.Size(210, 20);
             this.txtsolicitante.TabIndex = 3;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(306, 30);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(412, 30);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(42, 13);
+            this.label5.Size = new System.Drawing.Size(51, 16);
             this.label5.TabIndex = 2;
             this.label5.Text = "Estatus";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(155, 30);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(219, 30);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 13);
+            this.label4.Size = new System.Drawing.Size(75, 16);
             this.label4.TabIndex = 1;
             this.label4.Text = "Comprador";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(6, 30);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 13);
+            this.label3.Size = new System.Drawing.Size(69, 16);
             this.label3.TabIndex = 0;
             this.label3.Text = "Solicitante";
             // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.BackColor = System.Drawing.Color.LightGray;
+            this.groupBox3.Controls.Add(this.btnUpdate);
             this.groupBox3.Controls.Add(this.dtfecha);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.btnHistorial);
@@ -403,34 +458,46 @@ namespace RFQCompras
             this.groupBox3.Controls.Add(this.cmbComprador);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.pictureBox1);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(800, 68);
+            this.groupBox3.Size = new System.Drawing.Size(984, 68);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(783, 24);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.TabIndex = 6;
+            this.btnUpdate.Text = "Actualizar";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // dtfecha
             // 
             this.dtfecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtfecha.Location = new System.Drawing.Point(361, 40);
+            this.dtfecha.Location = new System.Drawing.Point(487, 42);
             this.dtfecha.Name = "dtfecha";
             this.dtfecha.Size = new System.Drawing.Size(200, 20);
             this.dtfecha.TabIndex = 5;
             // 
             // label14
             // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(294, 44);
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(400, 44);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(40, 13);
+            this.label14.Size = new System.Drawing.Size(48, 16);
             this.label14.TabIndex = 4;
             this.label14.Text = "Fecha:";
             // 
             // btnHistorial
             // 
+            this.btnHistorial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHistorial.Image = global::RFQCompras.Properties.Resources.Managerfiles_historyfiles_administradordearchivos_6225;
-            this.btnHistorial.Location = new System.Drawing.Point(738, 7);
+            this.btnHistorial.Location = new System.Drawing.Point(922, 9);
             this.btnHistorial.Name = "btnHistorial";
             this.btnHistorial.Size = new System.Drawing.Size(50, 53);
             this.btnHistorial.TabIndex = 2;
@@ -439,9 +506,7 @@ namespace RFQCompras
             // 
             // btnActualizar
             // 
-            this.btnActualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnActualizar.BackColor = System.Drawing.Color.Transparent;
             this.btnActualizar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btnActualizar.FlatAppearance.BorderSize = 0;
@@ -449,7 +514,7 @@ namespace RFQCompras
             this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActualizar.ForeColor = System.Drawing.SystemColors.Control;
             this.btnActualizar.Image = global::RFQCompras.Properties.Resources._1485969921_5_refresh_78908;
-            this.btnActualizar.Location = new System.Drawing.Point(690, 12);
+            this.btnActualizar.Location = new System.Drawing.Point(874, 12);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(42, 37);
             this.btnActualizar.TabIndex = 3;
@@ -458,26 +523,28 @@ namespace RFQCompras
             // 
             // cmbComprador
             // 
+            this.cmbComprador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbComprador.FormattingEnabled = true;
-            this.cmbComprador.Location = new System.Drawing.Point(361, 12);
+            this.cmbComprador.Location = new System.Drawing.Point(487, 11);
             this.cmbComprador.Name = "cmbComprador";
             this.cmbComprador.Size = new System.Drawing.Size(200, 21);
             this.cmbComprador.TabIndex = 0;
             // 
             // label15
             // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(294, 16);
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(400, 16);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(61, 13);
+            this.label15.Size = new System.Drawing.Size(78, 16);
             this.label15.TabIndex = 1;
             this.label15.Text = "Comprador:";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.pictureBox1.Image = global::RFQCompras.Properties.Resources.oficial;
             this.pictureBox1.Location = new System.Drawing.Point(12, 8);
             this.pictureBox1.Name = "pictureBox1";
@@ -485,20 +552,6 @@ namespace RFQCompras
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // ucListado1
-            // 
-            this.ucListado1.Area = null;
-            this.ucListado1.BackColor = System.Drawing.Color.Gainsboro;
-            this.ucListado1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucListado1.Descripcion = null;
-            this.ucListado1.Estatus = null;
-            this.ucListado1.IDRFQ = 0;
-            this.ucListado1.Location = new System.Drawing.Point(3, 3);
-            this.ucListado1.Name = "ucListado1";
-            this.ucListado1.Size = new System.Drawing.Size(241, 118);
-            this.ucListado1.Solicitante = null;
-            this.ucListado1.TabIndex = 1;
             // 
             // ucDetails1
             // 
@@ -527,10 +580,11 @@ namespace RFQCompras
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.LightGray;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(984, 671);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.groupBox3);
+            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmPrincipal";
             this.Text = "RFQ";
@@ -560,8 +614,6 @@ namespace RFQCompras
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.DateTimePicker dtFechaTabla;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtObservaciones;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtMonto;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtDiasTabla;
@@ -570,7 +622,6 @@ namespace RFQCompras
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dtFechasolicitan;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtdescription;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cmbtipo;
         private System.Windows.Forms.Label label6;
@@ -590,5 +641,11 @@ namespace RFQCompras
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel lnkTabla;
         private System.Windows.Forms.LinkLabel lnkRFQ;
+        private System.Windows.Forms.TextBox txtObservaciones;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtProvSugerido;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtdescription;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }

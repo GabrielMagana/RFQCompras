@@ -47,7 +47,6 @@ namespace RFQCompras
             this.btnGuardarDoc.TabIndex = 0;
             this.btnGuardarDoc.Text = "Guardar";
             this.btnGuardarDoc.UseVisualStyleBackColor = true;
-            this.btnGuardarDoc.Click += new System.EventHandler(this.btnGuardarDoc_Click);
             // 
             // label1
             // 
@@ -103,7 +102,6 @@ namespace RFQCompras
             this.btnCancelar.TabIndex = 8;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // UploadTabla
             // 
