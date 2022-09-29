@@ -54,14 +54,14 @@ namespace RFQCompras
             { opcion = 3; }
             else { opcion = 4; }
 
-            Proc.combos(cmbComprador, opcion);
+            Proc.combos(cmbComprador, opcion, usuario);
             cmbComprador.SelectedIndex = -1;
             this.dtfecha.Value = DateTime.Now;
-            Proc.combos(cmbtipo, 1);
+            Proc.combos(cmbtipo, 1, usuario);
             cmbtipo.SelectedIndex = -1;
-            Proc.combos(cmbestatus, 2);
+            Proc.combos(cmbestatus, 2, usuario);
             cmbestatus.SelectedIndex = -1;
-            Proc.combos(cmbcomprador2, 3);
+            Proc.combos(cmbcomprador2, 3, usuario);
             cmbcomprador2.SelectedIndex = -1;
             groupBox2.Visible = false;
 

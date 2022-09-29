@@ -22,10 +22,13 @@ namespace RFQCompras
         public static string emailsupervisor;
         public static string MailNotify;
         public static string pass;
+        static List<Listas.Detalles> listaDetalles;
 
         string Pc = Environment.MachineName;
-        public static void combos(ComboBox obj,int opcion)
+        public static void combos(ComboBox obj,int opcion, int Usuario)
         {
+            
+
             DataTable dt = new DataTable();
             using (SqlConnection conn1 = new SqlConnection(ConnectionString))
             {
@@ -34,6 +37,7 @@ namespace RFQCompras
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@opcion", opcion);
+                cmd.Parameters.AddWithValue("@ClaUasuario", Usuario);
 
                 SqlDataAdapter Lector = new SqlDataAdapter(cmd);
                 Lector.Fill(dt);
@@ -43,8 +47,123 @@ namespace RFQCompras
                 obj.DataSource = dt;
            
             }
-           
+        }
+        public static DataTable llenarGrid(int idrfq)
+        {
 
+            DataTable dt = new DataTable();
+            using (SqlConnection conn1 = new SqlConnection(ConnectionString))
+            {
+                conn1.Open();
+                SqlCommand cmd = new SqlCommand("dbo.DetallesProductoSel", conn1);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@idrfq", idrfq);
+              
+                SqlDataAdapter Lector = new SqlDataAdapter(cmd);
+                Lector.Fill(dt);
+            }
+            return dt;
+        }
+
+        public static void GenerarRFQ(DateTime FechaIns,string uso,int IdUsuario,int ClaSubCategoria,DataGridView SenderGrid,string ProveedorS,string Observaciones,string usuario)
+        {
+            int idRfq;
+            DataTable dtr = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = conn.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = conn.BeginTransaction();
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                cmd.Connection = conn;
+                cmd.Transaction = transaction;
+
+                try
+                {
+                    cmd.CommandText="dbo.GeneraRfqIU";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Fecha", FechaIns);
+                    cmd.Parameters.AddWithValue("@Descripcion", uso);
+                    cmd.Parameters.AddWithValue("@IdUsuario", IdUsuario);
+                    cmd.Parameters.AddWithValue("@ClaSubCategoria", ClaSubCategoria);
+                    cmd.Parameters.AddWithValue("@ProveedorS", ProveedorS);
+                    cmd.Parameters.AddWithValue("@Observaciones", Observaciones);
+
+                    SqlDataAdapter Dt = new SqlDataAdapter(cmd);
+                    Dt.Fill(dtr);
+
+                    idRfq = int.Parse(dtr.Rows[0]["Idrfq"].ToString());
+
+                    
+                       foreach (DataGridViewRow row in SenderGrid.Rows)
+                       {
+                        if (row.Cells[0].Value != null)
+                        {
+                            cmd.CommandText = "dbo.DetalleProductoIU";
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@IdRfq", idRfq);
+                            cmd.Parameters.AddWithValue("@Cantidad", int.Parse(row.Cells[0].Value.ToString()));
+                            cmd.Parameters.AddWithValue("@ClaUnidad", int.Parse(row.Cells[1].Value.ToString()));
+                            cmd.Parameters.AddWithValue("@DescripcionProducto", row.Cells[2].Value);
+                            cmd.Parameters.AddWithValue("@NumeroSerie", row.Cells[3].Value);
+                            cmd.Parameters.AddWithValue("@MarcaSugerida", row.Cells[4].Value);
+                            cmd.Parameters.AddWithValue("@Imagen", row.Cells[6].Value);
+                            cmd.Parameters.AddWithValue("@extension", row.Cells[8].Value);
+                            cmd.Parameters.AddWithValue("@NombreArchivo", row.Cells[7].Value);
+                            cmd.Parameters.AddWithValue("@UsuarioIns", usuario);
+                            cmd.ExecuteNonQuery();
+                        }
+                       }
+
+                    
+                    transaction.Commit();
+
+
+                    MessageBox.Show("El RFQ fue generado esta esperando ser autorizado.", "Successful", MessageBoxButtons.OK);
+                }
+
+
+                catch (Exception e)
+                {
+
+                    transaction.Rollback();
+                    MessageBox.Show("Hubo error en la actualización favor de contactar al equipo de Compras y de IT");
+                    
+                }
+            }
+            
+
+        }
+
+        public static void GetCmb(DataGridViewComboBoxColumn obj, int opcion, int Usuario)
+        {
+
+            DataTable dt = new DataTable();
+            using (SqlConnection conn1 = new SqlConnection(ConnectionString))
+            {
+                conn1.Open();
+                SqlCommand cmd = new SqlCommand("dbo.combos", conn1);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@opcion", opcion);
+                cmd.Parameters.AddWithValue("@ClaUasuario", Usuario);
+
+                SqlDataAdapter Lector = new SqlDataAdapter(cmd);
+                Lector.Fill(dt);
+
+                obj.DisplayMember = "descripcion";
+                obj.ValueMember = "id";
+                obj.DataSource = dt;
+
+            }
         }
 
         public static DataTable ObtenerConfiguraciones(int configuracion)
@@ -69,7 +188,27 @@ namespace RFQCompras
         }
 
 
+        public static DataTable RegresaUsuario(int Usuario)
+        {
+           
+            DataTable perm = new DataTable();
 
+
+            using (SqlConnection conn1 = new SqlConnection(ConnectionString))
+            {
+                conn1.Open();
+                SqlCommand cmd = new SqlCommand("Select NombreUsuario, Email From CatUsuarios with (NoLock) where idUsuario = @Usuario", conn1);
+                cmd.CommandType = CommandType.Text;
+
+                cmd.Parameters.AddWithValue("Usuario", Usuario);
+
+                SqlDataAdapter Lector = new SqlDataAdapter(cmd);
+                Lector.Fill(perm);
+
+            }
+            return perm;
+
+        }
 
         public static DataTable ValidarUsuarios(string opcion)
         { int Validacion=0, usuario = 0;
@@ -90,6 +229,81 @@ namespace RFQCompras
             }
             return perm;
             
+        }
+        public static DataTable ValidarG(string opcion)
+        {
+            int Validacion = 0, usuario = 0;
+            DataTable perm = new DataTable();
+
+
+            using (SqlConnection conn1 = new SqlConnection(ConnectionString))
+            {
+                conn1.Open();
+                SqlCommand cmd = new SqlCommand("dbo.ProcValidacionG", conn1);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@email", opcion);
+
+                SqlDataAdapter Lector = new SqlDataAdapter(cmd);
+                Lector.Fill(perm);
+
+            }
+            return perm;
+
+        }
+
+        public static void CambiarEstatus(int estatus,string Comentarios)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = conn.CreateCommand();
+                SqlTransaction transaction;
+
+                // Start a local transaction.
+                transaction = conn.BeginTransaction();
+
+                // Must assign both transaction object and connection
+                // to Command object for a pending local transaction
+                cmd.Connection = conn;
+                cmd.Transaction = transaction;
+
+                try
+                {
+                   cmd.CommandText="dbo.CambioEstatus";
+                   cmd.CommandType = CommandType.StoredProcedure;
+                   cmd.Parameters.AddWithValue("@Estatus", estatus);
+                   cmd.Parameters.AddWithValue("@Coments", Comentarios);
+
+                   cmd.ExecuteNonQuery();
+                   
+                    transaction.Commit();
+
+
+                    MessageBox.Show("se ha actualizado la información correctamente");
+   
+                    //switch (estatus)
+                    //{
+                    //    case 1: 
+                    //        enviocorreo()
+
+                    //}
+
+
+
+                }
+            
+                catch (Exception e)
+                {
+                
+                transaction.Rollback();
+                MessageBox.Show("Hubo error en la actualización favor de contactar al equipo de Compras y de IT");
+                return;
+                }
+            }
+            
+
         }
 
         public static void enviarcorreos(string  subject, string body, int opcion, string correo, string attachment )
@@ -190,6 +404,29 @@ namespace RFQCompras
                 body = "Tabla comparativa o Cotización " + titulo; //2 veces se envía
                 correo = correos;
             }
+
+            if (opcion1 == 4)
+            {
+                description = "Se Autoriza y se manda a compras el RFQ: " + titulo; //2 veces se envía
+                opcion = 2;
+                body = "El RFQ ha sido autorizado por el gerente de área y sera enviado a compras " + titulo; //2 veces se envía
+                correo = correos;
+            }
+            if (opcion1 == 4)
+            {
+                description = "Se Autoriza y se manda a compras el RFQ: " + titulo; //2 veces se envía
+                opcion = 2;
+                body = "El RFQ ha sido autorizado por el gerente de área y sera enviado a compras " + titulo; //2 veces se envía
+                correo = correos;
+            }
+            if (opcion1 == 4)
+            {
+                description = "Se Autoriza y se manda a compras el RFQ: " + titulo; //2 veces se envía
+                opcion = 2;
+                body = "El RFQ ha sido autorizado por el gerente de It/SQE y sera enviado a compras " + titulo; //2 veces se envía
+                correo = correos;
+            }
+
 
             enviarcorreos(description, body, opcion1, correo, ruta);
 

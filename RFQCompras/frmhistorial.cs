@@ -38,7 +38,7 @@ namespace RFQCompras
             { opcion = 3; }
             else { opcion = 4; }
             
-            Proc.combos(cmbComprador, opcion);
+            Proc.combos(cmbComprador, opcion,usuario);
 
             cmbComprador.SelectedValue = comprador;
             _comprador = usuario;

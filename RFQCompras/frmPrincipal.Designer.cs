@@ -30,7 +30,6 @@ namespace RFQCompras
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.ucListado1 = new RFQCompras.ucListado();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtProvSugerido = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -73,6 +72,7 @@ namespace RFQCompras
             this.cmbComprador = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ucListado1 = new RFQCompras.ucListado();
             this.ucDetails1 = new RFQCompras.ucDetails();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -90,20 +90,6 @@ namespace RFQCompras
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(272, 591);
             this.flowLayoutPanel1.TabIndex = 2;
-            // 
-            // ucListado1
-            // 
-            this.ucListado1.Area = null;
-            this.ucListado1.BackColor = System.Drawing.Color.Gainsboro;
-            this.ucListado1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ucListado1.Descripcion = null;
-            this.ucListado1.Estatus = null;
-            this.ucListado1.IDRFQ = 0;
-            this.ucListado1.Location = new System.Drawing.Point(3, 3);
-            this.ucListado1.Name = "ucListado1";
-            this.ucListado1.Size = new System.Drawing.Size(257, 118);
-            this.ucListado1.Solicitante = null;
-            this.ucListado1.TabIndex = 1;
             // 
             // groupBox2
             // 
@@ -552,6 +538,20 @@ namespace RFQCompras
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // ucListado1
+            // 
+            this.ucListado1.Area = null;
+            this.ucListado1.BackColor = System.Drawing.Color.Gainsboro;
+            this.ucListado1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucListado1.Descripcion = null;
+            this.ucListado1.Estatus = null;
+            this.ucListado1.IDRFQ = 0;
+            this.ucListado1.Location = new System.Drawing.Point(3, 3);
+            this.ucListado1.Name = "ucListado1";
+            this.ucListado1.Size = new System.Drawing.Size(257, 118);
+            this.ucListado1.Solicitante = null;
+            this.ucListado1.TabIndex = 1;
             // 
             // ucDetails1
             // 
