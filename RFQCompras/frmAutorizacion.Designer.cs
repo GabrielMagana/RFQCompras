@@ -197,9 +197,12 @@
             // 
             // dtgProductosRFQ
             // 
+            this.dtgProductosRFQ.AllowUserToAddRows = false;
+            this.dtgProductosRFQ.AllowUserToDeleteRows = false;
             this.dtgProductosRFQ.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgProductosRFQ.Location = new System.Drawing.Point(14, 245);
             this.dtgProductosRFQ.Name = "dtgProductosRFQ";
+            this.dtgProductosRFQ.ReadOnly = true;
             this.dtgProductosRFQ.Size = new System.Drawing.Size(521, 176);
             this.dtgProductosRFQ.TabIndex = 40;
             // 
@@ -404,12 +407,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(837, 642);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtpFecha);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.flowLayoutPanel1);
+            this.MinimizeBox = false;
             this.Name = "frmAutorizacion";
             this.Text = "Autorización de RFQ´s";
             this.flowLayoutPanel1.ResumeLayout(false);

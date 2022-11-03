@@ -105,7 +105,8 @@ namespace RFQCompras
 
                 try
                 {
-                    Proc.enviocorreo(1, destinotabla, "", _descripcion, "");
+                    
+                    Proc.enviocorreo(1, destinotabla, "", "",_descripcion, "","");
                     MessageBox.Show("Email enviado correctamente", "Succesfull", MessageBoxButtons.OK);
                 }
                 catch (Exception ex)

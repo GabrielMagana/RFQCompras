@@ -32,7 +32,7 @@ namespace RFQCompras
             {
 
                 
-                frmPrincipal frm = new frmPrincipal(txtUsuario.Text);
+                frmInicio frm = new frmInicio(txtUsuario.Text);
                 this.Hide();
                 frm.ShowDialog();
                 this.Close();
@@ -57,7 +57,7 @@ namespace RFQCompras
 
                 NombreCompleto = results.GetDirectoryEntry().Properties["DisplayName"].Value.ToString();
                 NTusername = results.GetDirectoryEntry().Properties["sAMAccountName"].Value.ToString();
-                co = results.GetDirectoryEntry().Properties["email"].Value.ToString();//correo
+                co = results.GetDirectoryEntry().Properties["mail"].Value.ToString();//correo
                 GetNTuser(txtUsuario.Text);
 
                 if (Permiso!=0)
@@ -97,16 +97,16 @@ namespace RFQCompras
             DataTable dt = new DataTable();
             dt = Proc.ValidarUsuarios(NTuserAD);
             Usuario = dt.Rows[0]["Usuario"].ToString().Trim();
-            NombreCompleto = dt.Rows[0]["NomUsuario"].ToString().Trim();
-            Nomina = int.Parse(dt.Rows[0]["ClaUsuario"].ToString().Trim());
+            NombreCompleto = dt.Rows[0]["NombreUsuario"].ToString().Trim();
+            Nomina = int.Parse(dt.Rows[0]["idUsuario"].ToString().Trim());
 
-            if(string.IsNullOrEmpty(dt.Rows[0]["ClaTipoUsuario"].ToString().Trim())==true)
+            if(string.IsNullOrEmpty(dt.Rows[0]["Permiso"].ToString().Trim())==true)
             {
                 Permiso = 0;
             }
             else
             {
-                Permiso = int.Parse(dt.Rows[0]["ClaTipoUsuario"].ToString().Trim());
+                Permiso = int.Parse(dt.Rows[0]["Permiso"].ToString().Trim());
             }
             
 

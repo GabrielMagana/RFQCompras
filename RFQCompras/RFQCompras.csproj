@@ -76,6 +76,12 @@
     <Compile Include="fmrLogin.designer.cs">
       <DependentUpon>fmrLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmDetalle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDetalle.Designer.cs">
+      <DependentUpon>frmDetalle.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmAutorizacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,17 +94,29 @@
     <Compile Include="frmCaptura.Designer.cs">
       <DependentUpon>frmCaptura.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCatalogo.cs">
+    <Compile Include="frmCatalogos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCatalogo.Designer.cs">
-      <DependentUpon>frmCatalogo.cs</DependentUpon>
+    <Compile Include="frmCatalogos.designer.cs">
+      <DependentUpon>frmCatalogos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmhistorial.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmhistorial.Designer.cs">
       <DependentUpon>frmhistorial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmInicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInicio.Designer.cs">
+      <DependentUpon>frmInicio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUsuario.designer.cs">
+      <DependentUpon>frmUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Listas.cs" />
     <Compile Include="Proc.cs" />
@@ -140,8 +158,20 @@
     <EmbeddedResource Include="frmCaptura.resx">
       <DependentUpon>frmCaptura.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCatalogos.resx">
+      <DependentUpon>frmCatalogos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDetalle.resx">
+      <DependentUpon>frmDetalle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmhistorial.resx">
       <DependentUpon>frmhistorial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInicio.resx">
+      <DependentUpon>frmInicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUsuario.resx">
+      <DependentUpon>frmUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

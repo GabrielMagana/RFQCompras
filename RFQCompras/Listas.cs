@@ -59,6 +59,9 @@ namespace RFQCompras
             public string lnkRfq { get; set; }
             public string email { get; set; }
             public string  ProvSugerido { get; set; }
+            public string emailEmpleado { get; set; }
+            public string emailcomprador { get; set; }
+            public string emailGerente { get; set; }
 
         }
 

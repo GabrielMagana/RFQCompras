@@ -23,8 +23,10 @@ namespace RFQCompras
         static List<Listas.Encabezado> lista;
         static List<Listas.Detalles> listaDetalles;
         public static int Dato;
-        string lnktabla, lnkrfq, email;
+        string emailEmpleado, emailcomprador, email, emailgerente,correo;
         DataTable dt = new DataTable();
+        private BindingSource bindingSource1 = new BindingSource();
+        
 
         DataTable permisos = new DataTable();
 
@@ -32,34 +34,127 @@ namespace RFQCompras
         {
             InitializeComponent();
             _usuario = Usuario;
-
+            txtemailGerentealterno.Visible = false;
+            txtGerentealterno.Visible = false;
+            label9.Visible = false;
+            label10.Visible = false;
             dt = Proc.ObtenerConfiguraciones(3);
             Ruta = dt.Rows[0]["Valor1"].ToString();
             RutaCot = dt.Rows[0]["Valor1"].ToString();
-
-            permisos = Proc.ValidarG(_usuario); 
+            
+            permisos = Proc.ValidarUsuarios(_usuario); 
 
             validacion = int.Parse(permisos.Rows[0]["permiso"].ToString().Trim());
             usuario = int.Parse(permisos.Rows[0]["idusuario"].ToString().Trim());
-
-
-            List<Listas.Encabezado> Lista = new List<Listas.Encabezado>();
+            email = permisos.Rows[0]["email"].ToString().Trim();
+            userName = permisos.Rows[0]["nombreusuario"].ToString().Trim();
+            List <Listas.Encabezado> Lista = new List<Listas.Encabezado>();
             Lista = ListaMenuG(usuario, dtpFecha.Value);
 
 
             Llenarlist(Lista);
         }
+        public bool ValidaRFq(string rfq)
+        {
+            if(string.IsNullOrWhiteSpace(rfq) || string.IsNullOrEmpty(rfq))
+            {
+                MessageBox.Show("Debes tener seleccionado un rfq", "Warning", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            
+                return false;
+
+            }
+            return true;
+        }
+
+        
         private void btnAutoriza_Click(object sender, EventArgs e)
         {
+            int estatus=0,resutado = 0, tipo=0, correotipo=0,tipoau=0;
 
+            if (ValidaRFq(txtIdRFQ.Text) == true)
+            {
+
+                if (int.Parse(txtGerentealternoCla.Text) != 0 && txtEstatus.Text == "Por Autorizar")
+                {
+                    if (int.Parse(txtGerentealternoCla.Text) == usuario)
+                    {
+                        estatus = 1;
+                        tipo = 3;
+                        tipoau = 1;
+                    }
+                    else
+                    { 
+                        estatus = 13;
+                        tipo = 2;
+                        tipoau = 2;
+
+                    }
+                }
+                else
+                {
+                   tipo = 1; 
+                   estatus = 1;
+                    tipoau = 1;
+
+                }
+
+                resultado = Proc.CambiarEstatus(estatus, int.Parse(txtIdRFQ.Text), txtObservaciones.Text,usuario, tipoau);
+
+                if (resultado == 1)
+                {
+                    switch (tipo)
+                    {
+                        case 1:
+                            correo = emailcomprador+", "+ email;
+                            correotipo = 5;
+                            break;
+                    }
+
+                    switch (tipo)
+                    {
+                        case 2:
+                            correo = txtemailGerentealterno.Text + ", " + emailgerente;
+                            correotipo = 6;
+                            break;
+                    }
+                    switch (tipo)
+                    {
+                        case 3:
+                            correo = email + ", " + emailgerente;
+                            correotipo = 5;
+                            break;
+                    }
+
+                   
+                    Proc.enviocorreo(correotipo, "", emailEmpleado, correo, txtdescription.Text, txtObservaciones.Text,"");
+                }
+
+            }    
         }
 
         private void btnRechazar_Click(object sender, EventArgs e)
         {
+            
+            if (emailgerente != email)
+            {
+                correo = emailgerente+", "+email;
 
+            }
+            else
+            {
+                correo = email;
+            }
+
+            if (ValidaRFq(txtIdRFQ.Text) == true)
+            {
+                correo = "magana.g@mazdalogi.mx"; 
+                emailEmpleado= "magana.g@mazdalogi.mx";
+
+                Proc.CambiarEstatus(14, int.Parse(txtIdRFQ.Text), txtObservaciones.Text,usuario,0);
+                Proc.enviocorreo(7, "", emailEmpleado, correo, txtdescription.Text, txtObservaciones.Text,"") ;
+            }
         }
-
-        private static List<Listas.Encabezado> ListaMenuG(int usuario, DateTime fecha)
+            private static List<Listas.Encabezado> ListaMenuG(int usuario, DateTime fecha)
         {
             lista = new List<Listas.Encabezado>();
 
@@ -118,7 +213,7 @@ namespace RFQCompras
         {
             int tipo = -1;
             DataTable DT = new DataTable();
-
+            DataGridViewImageColumn Imagen = new DataGridViewImageColumn();
 
             ucListado obj = (ucListado)sender;
 
@@ -148,12 +243,14 @@ namespace RFQCompras
             this.txtdescription.Text = Details[0].Desripcion;
             this.txtObservaciones.Text = Details[0].Observaciones;
             this.dtFechasolicitan.Value = Details[0].FechaSolicitud;
-            this.txtProvSugerido.Text = Details[0].Compradort;
             this.txtGerentealterno.Text = Details[0].GerenteITSQE;
             this.txtemailGerentealterno.Text = Details[0].EmailGerenteITSQE;
             this.txtGerentealternoCla.Text = Details[0].ClaGerenteITSQE.ToString();
             this.txtProvSugerido.Text = Details[0].ProvSugerido;
             this.txtsubCategoria.Text = Details[0].SubCategoria;
+            emailcomprador = Details[0].emailcomprador;
+            emailEmpleado = Details[0].emailEmpleado;
+            emailgerente = Details[0].emailGerente;
 
             if (Details[0].ClaGerenteITSQE == 0)
             {
@@ -166,15 +263,76 @@ namespace RFQCompras
             }  
             else
             {
-                txtemailGerentealterno.Visible = true;
-                txtGerentealterno.Visible = true;
-                label9.Visible = true;
-                label10.Visible = true;
+                if (Details[0].ClaGerenteITSQE != usuario)
+                {
+                    txtemailGerentealterno.Visible = true;
+                    txtGerentealterno.Visible = true;
+                    label9.Visible = true;
+                    label10.Visible = true;
+                }
+                else
+                {
+                    txtemailGerentealterno.Visible = false;
+                    txtGerentealterno.Visible = false;
+                    label9.Visible = false;
+                    label10.Visible = false;
+                }
             }
+
+            dtgProductosRFQ.DataSource = null;
+            
 
             DT = Proc.llenarGrid(Details[0].IdRfq);
 
-            dtgProductosRFQ.DataSource = DT;
+            dtgProductosRFQ.AutoGenerateColumns = false;
+            dtgProductosRFQ.AllowUserToAddRows = false;
+            dtgProductosRFQ.ColumnCount = 8;
+
+            Imagen.Name = "Imagen";
+            Imagen.DataPropertyName = "Imagen";
+            dtgProductosRFQ.Columns.Add(Imagen);
+            Imagen.HeaderText = "Imagen";
+            Imagen.ImageLayout = DataGridViewImageCellLayout.Stretch;
+
+            dtgProductosRFQ.Columns[0].HeaderText = "ID";
+            dtgProductosRFQ.Columns[0].DataPropertyName = "IDRFQ";
+            dtgProductosRFQ.Columns[1].HeaderText = "Descripción";
+            dtgProductosRFQ.Columns[1].DataPropertyName = "Descripcion";
+            dtgProductosRFQ.Columns[2].HeaderText = "Documento";
+            dtgProductosRFQ.Columns[2].DataPropertyName = "NombreDocumento";
+            dtgProductosRFQ.Columns[3].HeaderText = "Extension";
+            dtgProductosRFQ.Columns[3].DataPropertyName = "ExtensionDocumento";
+            dtgProductosRFQ.Columns[4].HeaderText = "Cantidad";
+            dtgProductosRFQ.Columns[4].DataPropertyName = "Cantidad";
+            dtgProductosRFQ.Columns[5].HeaderText = "Unidad";
+            dtgProductosRFQ.Columns[5].DataPropertyName = "Unidad";
+            dtgProductosRFQ.Columns[6].HeaderText = "Marca";
+            dtgProductosRFQ.Columns[6].DataPropertyName = "Marca";
+            dtgProductosRFQ.Columns[7].HeaderText = "Modelo / Numero Serie";
+            dtgProductosRFQ.Columns[7].DataPropertyName = "NumeroSerie";
+
+
+
+
+            dtgProductosRFQ.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dtgProductosRFQ.Columns[0].Visible = false;
+            dtgProductosRFQ.Columns[2].Visible = false;
+            dtgProductosRFQ.Columns[3].Visible = false;
+            
+            
+            bindingSource1.DataSource = DT;
+            dtgProductosRFQ.DataSource = bindingSource1;
+
+            dtgProductosRFQ.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dtgProductosRFQ.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            dtgProductosRFQ.AllowUserToResizeRows = false;
+
+            dtgProductosRFQ.RowHeadersVisible = false;
+            foreach (DataGridViewRow row in dtgProductosRFQ.Rows)
+            {
+                row.Height = 100;
+
+            }
 
 
         }
@@ -203,7 +361,7 @@ namespace RFQCompras
 
                 while (Lector.Read())
                 {
-                    frmAutorizacion.listaDetalles.Add(new Listas.Detalles { IdRfq = Lector.GetInt32(0), Compradort = Lector.GetString(3), EstatusT = Lector.GetString(4), Desripcion = Lector.GetString(1), Solicitante = Lector.GetString(2), FechaSolicitud = Lector.GetDateTime(5),SubCategoria = Lector.GetString(6) , Observaciones = Lector.GetString(7), ProvSugerido = Lector.GetString(8),GerenteITSQE=Lector.GetString(9),EmailGerenteITSQE=Lector.GetString(10),ClaGerenteITSQE=Lector.GetInt32(11) });
+                    frmAutorizacion.listaDetalles.Add(new Listas.Detalles { IdRfq = Lector.GetInt32(0), Compradort = Lector.GetString(4), EstatusT = Lector.GetString(6), Desripcion = Lector.GetString(1), Solicitante = Lector.GetString(2), FechaSolicitud = Lector.GetDateTime(7),SubCategoria = Lector.GetString(8) , Observaciones = Lector.GetString(9), ProvSugerido = Lector.GetString(10),GerenteITSQE=Lector.GetString(11),EmailGerenteITSQE=Lector.GetString(12),ClaGerenteITSQE=Lector.GetInt32(13),emailEmpleado=Lector.GetString(3),emailcomprador=Lector.GetString(5) });
                 }
 
                 Lector.Close();

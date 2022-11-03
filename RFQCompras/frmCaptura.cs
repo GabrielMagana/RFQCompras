@@ -52,7 +52,7 @@ namespace RFQCompras
 
             permisos = Proc.ValidarUsuarios(_usuario);
 
-            validacion = int.Parse(permisos.Rows[0]["permiso"].ToString().Trim());
+            validacion = int.Parse(permisos.Rows[0]["permiso"].ToString().Trim()); 
             usuario = int.Parse(permisos.Rows[0]["idusuario"].ToString().Trim());
 
             //dtgCompras.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -103,6 +103,7 @@ namespace RFQCompras
                         stream = ms.ToArray();
                     }
                     senderGrid.Rows[e.RowIndex].Cells[e.ColumnIndex + 1].Value = stream;
+                  
                     //name[e.RowIndex] = Path.GetFileName(openFileDialog1.FileName);
                     senderGrid.Rows[e.RowIndex].Cells[e.ColumnIndex + 2].Value = Path.GetFileName(openFileDialog1.FileName);
                     senderGrid.Rows[e.RowIndex].Cells[e.ColumnIndex + 3].Value = Path.GetExtension(openFileDialog1.FileName);
@@ -110,7 +111,11 @@ namespace RFQCompras
                 }
 
             }
-            
+            foreach (DataGridViewRow row in senderGrid.Rows)
+            {
+                row.Height = 120;
+
+            }
 
         }
         private void dtgCompras_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -131,7 +136,7 @@ namespace RFQCompras
 
         private void btnRFQ_Click(object sender, EventArgs e)
         {
-            int usuarioadiaciente=0;
+            int usuarioadiaciente=0,resultado=0;
             string mensaje = "";
             if(txtUso.Text == "")
             {
@@ -159,7 +164,14 @@ namespace RFQCompras
                 return;
             }
 
-            Proc.GenerarRFQ(dtpFechaIns.Value,txtUso.Text, usuario,int.Parse(cmbSubCategoria.SelectedValue.ToString()),dtgCompras, txtProveedorSugerido.Text,txtObservaciones.Text,_usuario);
+           resultado= Proc.GenerarRFQ(dtpFechaIns.Value,txtUso.Text, usuario,int.Parse(cmbSubCategoria.SelectedValue.ToString()),dtgCompras, txtProveedorSugerido.Text,txtObservaciones.Text,_usuario);
+
+            if (resultado ==1)
+            {
+               
+                Proc.enviocorreo(4, "", txtEmailSolicitante.Text, txtEmailSolicitante.Text, txtUso.Text, txtObservaciones.Text,"");
+
+            }
 
         }
 

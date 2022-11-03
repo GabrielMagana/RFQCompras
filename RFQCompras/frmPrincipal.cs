@@ -18,7 +18,7 @@ namespace RFQCompras
 {
     public partial class frmPrincipal : Form
     {
-        public int resultado=1,validacion,usuario;
+        public int resultado=1,validacion,usuario, _gerentecompras,_superv;
         public static string ConnectionString = ConfigurationManager.AppSettings["ConexionDB"];
         public static string Ruta;
         public static string RutaCot;
@@ -29,21 +29,28 @@ namespace RFQCompras
         public static int Dato;
         string lnktabla, lnkrfq,email;
         DataTable dt= new DataTable();
+        DataTable dtc = new DataTable();
+        DataTable dts = new DataTable();
         DataTable permisos = new DataTable();
 
         static frmPrincipal _obj;
-        
-     
+
+
         public frmPrincipal(string Usuario)
         {
             int opcion;
             InitializeComponent();
-            
+
             dt = Proc.ObtenerConfiguraciones(3);
             Ruta = dt.Rows[0]["Valor1"].ToString();
             RutaCot = dt.Rows[0]["Valor1"].ToString();
 
             _usuario = Usuario;
+            dtc = Proc.ObtenerConfiguraciones(4);
+            _gerentecompras = int.Parse(dtc.Rows[0]["valor1"].ToString().Trim());
+
+            dts = Proc.ObtenerConfiguraciones(2);
+            _superv = int.Parse(dts.Rows[0]["valor1Num"].ToString().Trim());
 
             permisos = Proc.ValidarUsuarios(_usuario);
 
@@ -54,7 +61,7 @@ namespace RFQCompras
             { opcion = 3; }
             else { opcion = 4; }
 
-            Proc.combos(cmbComprador, opcion, usuario);
+            Proc.combos(cmbComprador, 4, usuario);
             cmbComprador.SelectedIndex = -1;
             this.dtfecha.Value = DateTime.Now;
             Proc.combos(cmbtipo, 1, usuario);
@@ -65,11 +72,37 @@ namespace RFQCompras
             cmbcomprador2.SelectedIndex = -1;
             groupBox2.Visible = false;
 
-            
-           
+
+
             cmbComprador.SelectedValue = usuario;
-            if (validacion != 1)
-            { cmbComprador.Enabled = false; btnUpdate.Visible = false; }
+            if (validacion == 2)
+            {   
+                cmbComprador.Enabled = true;
+                btnUpdate.Visible = true;
+                txtObservaciones.Enabled = true;
+                btnUpdate.Text = "Comentarios";
+            }
+            else if (validacion == 3)
+            { 
+                    cmbComprador.Enabled = false; 
+                    btnUpdate.Visible = false;
+                    txtObservaciones.Enabled = false;
+            }
+            else if (validacion == 1 || (validacion == 4 && usuario == _gerentecompras))
+            { 
+                    cmbComprador.Enabled = true; 
+                    btnUpdate.Visible = true;
+                    txtObservaciones.Enabled = true;
+                    btnUpdate.Text = "Actualizar";
+            }    
+            else
+            { 
+                    cmbComprador.Enabled = true; 
+                    btnUpdate.Visible = false;
+                    txtObservaciones.Enabled = false;
+            }
+
+           
 
 
         }
@@ -245,7 +278,7 @@ namespace RFQCompras
         private void Formato()
         {
 
-            if (validacion == 3)
+            if (validacion == 3 || ((validacion == 4 || validacion == 5) && usuario != _gerentecompras))
             {   btnUpdate.Visible=false;
                 txtsolicitante.Enabled = false;
                 txtdescription.Enabled = false;
@@ -256,11 +289,57 @@ namespace RFQCompras
                 txtDiasTotales.Enabled = false;
                 cmbcomprador2.Enabled = false;
                 cmbestatus.Enabled = false;
+                
+                switch (int.Parse(cmbestatus.GetItemText(cmbestatus.SelectedValue).ToString()))
+                {
+                    case 12:
+                        {
+                            dtCotizacion.Visible = false;
+                            dtFechaTabla.Visible = false;
+                            label1.Visible = false;
+                            label13.Visible = false;
+                            break;
+                        }
+                    case 13:
+                        {
+                            dtCotizacion.Visible = false;
+                            dtFechaTabla.Visible = false;
+                            label1.Visible = false;
+                            label13.Visible = false;
+                            break;
+                        }
+                    case 1:
+                        {
+                            dtCotizacion.Visible = false;
+                            dtFechaTabla.Visible = false;
+                            label1.Visible = false;
+                            label13.Visible = false;
+                            break;
+                        }
+                    case 2:
+                        {
+                            dtCotizacion.Visible = true;
+                            dtFechaTabla.Visible = false;
+                            label1.Visible = true;
+                            label13.Visible = false;
+                            break;
+                        }
+                    case 3:
+                        {
+                            dtCotizacion.Visible = true;
+                            dtFechaTabla.Visible = true;
+                            label1.Visible = true;
+                            label13.Visible = true;
+                            break;
+                        }
+                }
+         
+               
+
+                
                 cmbtipo.Enabled = false;
-                dtCotizacion.Enabled = false;
                 dtfecha.Enabled = true;
                 dtFechasolicitan.Enabled=false;
-                dtFechaTabla.Enabled = false;
                 txtIdRFQ.Enabled = false;
                 txtIdRFQ.Visible = false;
                 dtCotizacion.Enabled = false;
@@ -276,7 +355,7 @@ namespace RFQCompras
 
                 txtsolicitante.Enabled = false;
                 txtdescription.Enabled = false;
-                txtObservaciones.Enabled = true;
+               
                 dtFechasolicitan.Enabled = false;
                 txtDiasTabla.Enabled = false;
                 txtDiasTotales.Enabled = false;
@@ -310,20 +389,21 @@ namespace RFQCompras
                 {
                     cmbtipo.Enabled = false;
                     txtObservaciones.Enabled = true;
+                   
                 }
+               
 
-                if ((cmbestatus.SelectedValue.ToString() == "1" && int.Parse(this.cmbComprador.SelectedValue.ToString()) == 4) || (cmbestatus.SelectedValue.ToString() == "1" && int.Parse(this.cmbComprador.SelectedValue.ToString()) == 5))
+                if ((cmbestatus.SelectedValue.ToString() == "1" && usuario == _superv) || (cmbestatus.SelectedValue.ToString() == "1" && usuario == _gerentecompras))
                 {
-                    btnUpdate.Visible = true;
+                   
                     cmbcomprador2.Enabled = true;
                     txtProvSugerido.Enabled = true;
-                    txtObservaciones.Enabled = true;
                     cmbtipo.Enabled = true;
                     txtdescription.Enabled = true;
                 }
                 else
                 {
-                    btnUpdate.Visible = false;
+                    
                     cmbcomprador2.Enabled = false;
                     txtProvSugerido.Enabled = false;
                     txtdescription.Enabled = false;
@@ -344,7 +424,6 @@ namespace RFQCompras
                     label11.Visible = true;
                     cmbtipo.Enabled = false;
                     txtMonto.Enabled = true;
-                    txtObservaciones.Enabled = true;
                     btnCambiaEstatus.Visible = true;
                     btnCambiar.Visible = true;
                     btnCancelar.Visible = true;
@@ -365,7 +444,7 @@ namespace RFQCompras
                     lnkTabla.Visible = true;
                     dtCotizacion.Visible = true;
                     cmbtipo.Enabled = false;
-                    txtObservaciones.Enabled = true;
+                   
                 }
 
                 if (cmbestatus.SelectedValue.ToString() == "9")
@@ -407,7 +486,7 @@ namespace RFQCompras
                     cmbtipo.Enabled = false;
                     txtIdRFQ.Enabled = false;
                     txtIdRFQ.Visible = false;
-                    txtObservaciones.Enabled = false;
+                   
                     dtFechaTabla.Enabled = false;
                     dtFechasolicitan.Enabled = false;
                 }
@@ -426,7 +505,7 @@ namespace RFQCompras
                     cmbtipo.Enabled = false;
                     txtIdRFQ.Enabled = false;
                     txtIdRFQ.Visible = false;
-                    txtObservaciones.Enabled = false;
+                    
                     dtCotizacion.Enabled = false;
                     dtCotizacion.Visible = true;
                     dtFechaTabla.Enabled = false;
@@ -472,7 +551,7 @@ namespace RFQCompras
 
                 cmd.Parameters.AddWithValue("@idRfq", id);
 
-                SqlDataReader Lector = cmd.ExecuteReader();
+                SqlDataReader Lector = cmd.ExecuteReader(); 
 
 
                 while (Lector.Read())
@@ -565,8 +644,8 @@ namespace RFQCompras
                 {
                     try
                     {
-                        Proc.enviocorreo(3, lnktabla, txtsolicitante.Text, txtdescription.Text, "");
-                        Proc.enviocorreo(3, lnktabla,email, txtdescription.Text, "");
+                        Proc.enviocorreo(3, lnktabla, txtsolicitante.Text,email, txtdescription.Text, "","");
+                        //Proc.enviocorreo(3, lnktabla,email, txtdescription.Text, "");
                         MessageBox.Show("Email enviado correctamente", "Succesfull", MessageBoxButtons.OK);
                     }
                     catch (Exception ex)
@@ -629,7 +708,7 @@ namespace RFQCompras
 
             try
             {
-                Proc.enviocorreo(2, "",txtsolicitante.Text, "del RFQ " + txtIdRFQ.Text + " ha sido cancelado favor de contactar al personal del área de compras", "");
+                Proc.enviocorreo(2, "",txtsolicitante.Text,email, txtdescription.Text, "","");
                 MessageBox.Show("Email enviado correctamente", "Succesfull", MessageBoxButtons.OK);
             }
             catch (Exception ex)
@@ -645,6 +724,16 @@ namespace RFQCompras
 
         }
 
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            frmDetalle frm = new frmDetalle(int.Parse(txtIdRFQ.Text));
+        
+            frm.AutoSize = false;
+            frm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            frm.ShowDialog();
+            frm.MaximizeBox = false;
+        }
+
         private void btnCambiar_Click(object sender, EventArgs e)
         {
             int opcion = 2;
@@ -657,7 +746,7 @@ namespace RFQCompras
                 
                 try
                 {
-                    Proc.enviocorreo(2, "", email, txtdescription.Text, "");
+                    Proc.enviocorreo(2, "", txtsolicitante.Text, email, txtdescription.Text, txtObservaciones.Text, "");
                     MessageBox.Show("Email enviado correctamente", "Succesfull", MessageBoxButtons.OK);
                 }
                 catch (Exception ex)
@@ -690,9 +779,9 @@ namespace RFQCompras
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (cmbcomprador2.SelectedItem == null)
+            if (string.IsNullOrEmpty(txtIdRFQ.Text))
             {
-                MessageBox.Show("Favor de seleccionar un comprador", "Warning", MessageBoxButtons.OK);
+                MessageBox.Show("Favor de seleccionar un RFQ", "Warning", MessageBoxButtons.OK);
                 return;
             }
 

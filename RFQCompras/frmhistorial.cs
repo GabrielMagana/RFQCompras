@@ -119,23 +119,24 @@ namespace RFQCompras
 
         private void formateargrid()
         {
-            dgvHistorico.Columns[0].HeaderText = "ID";
+            dgvHistorico.Columns[0].HeaderText = "ID RFQ";
             dgvHistorico.Columns[1].HeaderText = "Fecha Solicitud";
             dgvHistorico.Columns[2].HeaderText = "Descripción";
             dgvHistorico.Columns[3].HeaderText = "Área";
-            dgvHistorico.Columns[4].HeaderText = "Solicitante";
-            dgvHistorico.Columns[5].HeaderText = "Comprador";
-            dgvHistorico.Columns[6].HeaderText = "Email Comprador";
-            dgvHistorico.Columns[7].HeaderText = "Estatus";
-            dgvHistorico.Columns[8].HeaderText = "Categoria";
-            dgvHistorico.Columns[9].HeaderText = "Fecha Cotización";
-            dgvHistorico.Columns[10].HeaderText = "Dias Totales";
-            dgvHistorico.Columns[11].HeaderText = "Fecha Tabla Comparativa";
-            dgvHistorico.Columns[12].HeaderText = "Dias Tabla Comparativa";
-            dgvHistorico.Columns[13].HeaderText = "Monto";
-            dgvHistorico.Columns[14].HeaderText = "Observaciones";
-            dgvHistorico.Columns[15].HeaderText = "RFQ";
-            dgvHistorico.Columns[16].HeaderText = "Tabla Comparativa";
+            dgvHistorico.Columns[4].HeaderText = "Email Solicitante";
+            dgvHistorico.Columns[5].HeaderText = "Solicitante";
+            dgvHistorico.Columns[6].HeaderText = "Comprador";
+            dgvHistorico.Columns[7].HeaderText = "Email Comprador";
+            dgvHistorico.Columns[8].HeaderText = "Estatus";
+            dgvHistorico.Columns[9].HeaderText = "Categoria";
+            dgvHistorico.Columns[10].HeaderText = "Fecha Cotización";
+            dgvHistorico.Columns[11].HeaderText = "Dias Totales";
+            dgvHistorico.Columns[12].HeaderText = "Fecha Tabla Comparativa";
+            dgvHistorico.Columns[13].HeaderText = "Dias Tabla Comparativa";
+            dgvHistorico.Columns[14].HeaderText = "Monto";
+            dgvHistorico.Columns[15].HeaderText = "Observaciones";
+            dgvHistorico.Columns[16].HeaderText = "RFQ";
+            dgvHistorico.Columns[17].HeaderText = "Tabla Comparativa";
 
 
             //foreach 
@@ -144,7 +145,7 @@ namespace RFQCompras
             {
                 for (int i = 0; i < dgvHistorico.Columns.Count; i++)
                 {
-                    if (i == 15 || i == 16)
+                    if (i == 16 || i == 17)
                     {
                         DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
                         linkCell.Value = row.Cells[i].Value;
@@ -155,9 +156,9 @@ namespace RFQCompras
 
             if (validacion == 3)
             {
-                dgvHistorico.Columns[14].Visible = false;
                 dgvHistorico.Columns[15].Visible = false;
                 dgvHistorico.Columns[16].Visible = false;
+                dgvHistorico.Columns[17].Visible = false;
 
             }
         }
@@ -167,7 +168,7 @@ namespace RFQCompras
             var senderGrid = (DataGridView)sender;
 
 
-            if ((e.ColumnIndex==15 || e.ColumnIndex==16) && e.RowIndex >= 0)
+            if ((e.ColumnIndex==16 || e.ColumnIndex==17) && e.RowIndex >= 0)
             {
                 ruta= senderGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(); 
                 Process proceso = new Process();

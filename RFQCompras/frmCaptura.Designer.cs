@@ -40,18 +40,29 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtEmailITSQE = new System.Windows.Forms.TextBox();
-            this.txtGerenteITSQE = new System.Windows.Forms.TextBox();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.cmbSubCategoria = new System.Windows.Forms.ComboBox();
             this.txtProveedorSugerido = new System.Windows.Forms.TextBox();
             this.txtUso = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.dtgCompras = new System.Windows.Forms.DataGridView();
+            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unit = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serialNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AgregarImagen = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Image = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ColNombreDoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NombreExt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtEmailITSQE = new System.Windows.Forms.TextBox();
+            this.txtGerenteITSQE = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.cmbArea = new System.Windows.Forms.ComboBox();
@@ -62,17 +73,6 @@
             this.btnRFQ = new System.Windows.Forms.Button();
             this.btnLimpia = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txtObservaciones = new System.Windows.Forms.TextBox();
-            this.Qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unit = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serialNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Marca = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AgregarImagen = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Image = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ColNombreDoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreExt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -203,21 +203,22 @@
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             // 
-            // txtEmailITSQE
+            // txtObservaciones
             // 
-            this.txtEmailITSQE.Enabled = false;
-            this.txtEmailITSQE.Location = new System.Drawing.Point(539, 167);
-            this.txtEmailITSQE.Name = "txtEmailITSQE";
-            this.txtEmailITSQE.Size = new System.Drawing.Size(215, 20);
-            this.txtEmailITSQE.TabIndex = 28;
+            this.txtObservaciones.Location = new System.Drawing.Point(478, 269);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(280, 79);
+            this.txtObservaciones.TabIndex = 24;
             // 
-            // txtGerenteITSQE
+            // label17
             // 
-            this.txtGerenteITSQE.Enabled = false;
-            this.txtGerenteITSQE.Location = new System.Drawing.Point(553, 143);
-            this.txtGerenteITSQE.Name = "txtGerenteITSQE";
-            this.txtGerenteITSQE.Size = new System.Drawing.Size(201, 20);
-            this.txtGerenteITSQE.TabIndex = 27;
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(475, 251);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(68, 13);
+            this.label17.TabIndex = 23;
+            this.label17.Text = "Comentarios:";
             // 
             // cmbSubCategoria
             // 
@@ -256,24 +257,6 @@
             this.label16.Text = "Si esta solicitud tiene relación en materia ambiental o Tecnologia IT, debe tener" +
     " aprobación por parte del departamento de SQE o IT adicionalmente. ";
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(406, 174);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(127, 13);
-            this.label15.TabIndex = 19;
-            this.label15.Text = "Correo gerente IT o SQE:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(406, 146);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(148, 13);
-            this.label14.TabIndex = 18;
-            this.label14.Text = "Nombre gerente de IT o SQE:";
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -297,9 +280,9 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(6, 245);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(104, 13);
+            this.label11.Size = new System.Drawing.Size(36, 13);
             this.label11.TabIndex = 15;
-            this.label11.Text = "Descripción o Titulo:";
+            this.label11.Text = "Titulo:";
             // 
             // dtgCompras
             // 
@@ -324,6 +307,92 @@
             this.dtgCompras.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dtgCompras_CellFormatting);
             this.dtgCompras.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgCompras_CellValidated);
             this.dtgCompras.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dtgCompras_CellValidating);
+            // 
+            // Qty
+            // 
+            this.Qty.HeaderText = "Cantidad requerida";
+            this.Qty.Name = "Qty";
+            // 
+            // unit
+            // 
+            this.unit.HeaderText = "Unidad";
+            this.unit.Name = "unit";
+            this.unit.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.unit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Description
+            // 
+            this.Description.HeaderText = "Descripción";
+            this.Description.Name = "Description";
+            // 
+            // serialNumber
+            // 
+            this.serialNumber.HeaderText = "Modelo o número de parte";
+            this.serialNumber.Name = "serialNumber";
+            // 
+            // Marca
+            // 
+            this.Marca.HeaderText = "Marca Sugerida";
+            this.Marca.Name = "Marca";
+            // 
+            // AgregarImagen
+            // 
+            this.AgregarImagen.HeaderText = "Agregar";
+            this.AgregarImagen.Name = "AgregarImagen";
+            this.AgregarImagen.UseColumnTextForButtonValue = true;
+            // 
+            // Image
+            // 
+            this.Image.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Image.FillWeight = 300F;
+            this.Image.HeaderText = "Imagen / fotografia";
+            this.Image.Name = "Image";
+            // 
+            // ColNombreDoc
+            // 
+            this.ColNombreDoc.HeaderText = "NombreDoc";
+            this.ColNombreDoc.Name = "ColNombreDoc";
+            this.ColNombreDoc.Visible = false;
+            // 
+            // NombreExt
+            // 
+            this.NombreExt.HeaderText = "Extension";
+            this.NombreExt.Name = "NombreExt";
+            this.NombreExt.Visible = false;
+            // 
+            // txtEmailITSQE
+            // 
+            this.txtEmailITSQE.Enabled = false;
+            this.txtEmailITSQE.Location = new System.Drawing.Point(539, 167);
+            this.txtEmailITSQE.Name = "txtEmailITSQE";
+            this.txtEmailITSQE.Size = new System.Drawing.Size(215, 20);
+            this.txtEmailITSQE.TabIndex = 28;
+            // 
+            // txtGerenteITSQE
+            // 
+            this.txtGerenteITSQE.Enabled = false;
+            this.txtGerenteITSQE.Location = new System.Drawing.Point(553, 143);
+            this.txtGerenteITSQE.Name = "txtGerenteITSQE";
+            this.txtGerenteITSQE.Size = new System.Drawing.Size(201, 20);
+            this.txtGerenteITSQE.TabIndex = 27;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(406, 174);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(127, 13);
+            this.label15.TabIndex = 19;
+            this.label15.Text = "Correo gerente IT o SQE:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(406, 146);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(148, 13);
+            this.label14.TabIndex = 18;
+            this.label14.Text = "Nombre gerente de IT o SQE:";
             // 
             // label7
             // 
@@ -406,75 +475,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(475, 251);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(68, 13);
-            this.label17.TabIndex = 23;
-            this.label17.Text = "Comentarios:";
-            // 
-            // txtObservaciones
-            // 
-            this.txtObservaciones.Location = new System.Drawing.Point(478, 269);
-            this.txtObservaciones.Multiline = true;
-            this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.Size = new System.Drawing.Size(280, 79);
-            this.txtObservaciones.TabIndex = 24;
-            // 
-            // Qty
-            // 
-            this.Qty.HeaderText = "Cantidad requerida";
-            this.Qty.Name = "Qty";
-            // 
-            // unit
-            // 
-            this.unit.HeaderText = "Unidad";
-            this.unit.Name = "unit";
-            this.unit.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.unit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Description
-            // 
-            this.Description.HeaderText = "Descripción";
-            this.Description.Name = "Description";
-            // 
-            // serialNumber
-            // 
-            this.serialNumber.HeaderText = "Modelo o número de parte";
-            this.serialNumber.Name = "serialNumber";
-            // 
-            // Marca
-            // 
-            this.Marca.HeaderText = "Marca Sugerida";
-            this.Marca.Name = "Marca";
-            // 
-            // AgregarImagen
-            // 
-            this.AgregarImagen.HeaderText = "Agregar";
-            this.AgregarImagen.Name = "AgregarImagen";
-            this.AgregarImagen.UseColumnTextForButtonValue = true;
-            // 
-            // Image
-            // 
-            this.Image.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Image.FillWeight = 300F;
-            this.Image.HeaderText = "Imagen / fotografia";
-            this.Image.Name = "Image";
-            // 
-            // ColNombreDoc
-            // 
-            this.ColNombreDoc.HeaderText = "NombreDoc";
-            this.ColNombreDoc.Name = "ColNombreDoc";
-            this.ColNombreDoc.Visible = false;
-            // 
-            // NombreExt
-            // 
-            this.NombreExt.HeaderText = "Extension";
-            this.NombreExt.Name = "NombreExt";
-            this.NombreExt.Visible = false;
             // 
             // frmCaptura
             // 

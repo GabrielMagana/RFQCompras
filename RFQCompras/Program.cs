@@ -16,7 +16,7 @@ namespace RFQCompras
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmAutorizacion("silva.j"));
+            Application.Run(new frmInicio("loza.m"));
         }
     }
 }
