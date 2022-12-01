@@ -127,7 +127,7 @@
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
             this.Name = "fmrLogin";
-            this.Text = "Login Payment";
+            this.Text = "Login RFQ\'s";
             this.Load += new System.EventHandler(this.fmrLogin_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -414,6 +414,7 @@
             // 
             // cmbArea
             // 
+            this.cmbArea.Enabled = false;
             this.cmbArea.FormattingEnabled = true;
             this.cmbArea.Location = new System.Drawing.Point(121, 120);
             this.cmbArea.Name = "cmbArea";

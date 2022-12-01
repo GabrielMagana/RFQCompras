@@ -39,12 +39,19 @@ namespace RFQCompras
             else if ((_permiso == 4 || _permiso==5) && Usuario != _gerentecompras)
             {
                 capturaToolStripMenuItem.Visible = false;
-               catalogosToolStripMenuItem.Visible = false;
+                catalogosToolStripMenuItem.Visible = false;
             }
             else
             { 
                 capturaToolStripMenuItem.Visible=false;
-                autorizaciónToolStripMenuItem.Visible = false;
+                if (_permiso == 4)
+                {
+                    autorizaciónToolStripMenuItem.Visible = true;
+                }
+                else
+                {
+                    autorizaciónToolStripMenuItem.Visible = false;
+                }
 
             }
         }

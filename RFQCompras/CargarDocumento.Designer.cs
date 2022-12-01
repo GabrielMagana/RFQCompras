@@ -54,7 +54,6 @@ namespace RFQCompras
             this.uploadTabla1.Name = "uploadTabla1";
             this.uploadTabla1.Size = new System.Drawing.Size(247, 248);
             this.uploadTabla1.TabIndex = 0;
-            this.uploadTabla1.Load += new System.EventHandler(this.uploadTabla1_Load);
             // 
             // txtruta
             // 

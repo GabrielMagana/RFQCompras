@@ -77,7 +77,7 @@ namespace RFQCompras
             cmbComprador.SelectedValue = usuario;
             if (validacion == 2)
             {   
-                cmbComprador.Enabled = true;
+                cmbComprador.Enabled = false;
                 btnUpdate.Visible = true;
                 txtObservaciones.Enabled = true;
                 btnUpdate.Text = "Comentarios";
@@ -174,7 +174,7 @@ namespace RFQCompras
                     cmd.Parameters.AddWithValue("@Fecha", fecha);
                     cmd.Parameters.AddWithValue("@comprador", comprador);
 
-                    SqlDataReader Lector = cmd.ExecuteReader();
+                    SqlDataReader Lector = cmd.ExecuteReader(); 
 
                     while (Lector.Read())
                     {
@@ -289,7 +289,9 @@ namespace RFQCompras
                 txtDiasTotales.Enabled = false;
                 cmbcomprador2.Enabled = false;
                 cmbestatus.Enabled = false;
-                
+                dtFechaTabla.Enabled=false;
+
+
                 switch (int.Parse(cmbestatus.GetItemText(cmbestatus.SelectedValue).ToString()))
                 {
                     case 12:
@@ -385,7 +387,7 @@ namespace RFQCompras
                     label13.Visible = false;
                     label11.Visible = false;
                 }
-                if (cmbestatus.SelectedValue.ToString() == "1" && validacion == 1)
+                if (cmbestatus.SelectedValue.ToString() == "1" && (usuario == _superv || usuario == _gerentecompras) )
                 {
                     cmbtipo.Enabled = false;
                     txtObservaciones.Enabled = true;
@@ -452,14 +454,14 @@ namespace RFQCompras
                     lnkTabla.Visible = false;
                 }
 
-                if (validacion == 1 && cmbestatus.SelectedValue.ToString() != "3")
+                if (cmbestatus.SelectedValue.ToString() != "3" && (usuario == _superv || usuario == _gerentecompras))
                 {
                     btnCambiaEstatus.Visible = false;
 
                 }
 
 
-                if (validacion == 1 && cmbestatus.SelectedValue.ToString() == "3" )
+                if (cmbestatus.SelectedValue.ToString() == "3" && (usuario == _superv || usuario == _gerentecompras))
                 {
                     btnCambiaEstatus.Visible = true;
                     btnCambiaEstatus.Text = "Autorizar";
@@ -520,7 +522,7 @@ namespace RFQCompras
 
 
                 }
-                if (validacion == 1 && cmbestatus.SelectedValue.ToString() == "11" && (decimal.Parse(txtMonto.Text) <= 5000 && decimal.Parse(txtMonto.Text) > 0))
+                if ((usuario == _superv || usuario == _gerentecompras)&& cmbestatus.SelectedValue.ToString() == "11" && (decimal.Parse(txtMonto.Text) <= 5000 && decimal.Parse(txtMonto.Text) > 0))
                 {
                     btnCambiaEstatus.Visible = true;
                     btnCambiaEstatus.Text = "Autorizar";

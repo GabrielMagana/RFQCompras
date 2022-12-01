@@ -147,9 +147,7 @@ namespace RFQCompras
 
             if (ValidaRFq(txtIdRFQ.Text) == true)
             {
-                correo = "magana.g@mazdalogi.mx"; 
-                emailEmpleado= "magana.g@mazdalogi.mx";
-
+               
                 Proc.CambiarEstatus(14, int.Parse(txtIdRFQ.Text), txtObservaciones.Text,usuario,0);
                 Proc.enviocorreo(7, "", emailEmpleado, correo, txtdescription.Text, txtObservaciones.Text,"") ;
             }
@@ -168,7 +166,7 @@ namespace RFQCompras
                 cmd.Parameters.AddWithValue("@Fecha", fecha);
                 cmd.Parameters.AddWithValue("@Autorizador", usuario);
 
-                SqlDataReader Lector = cmd.ExecuteReader();
+                SqlDataReader Lector = cmd.ExecuteReader(); 
 
                 while (Lector.Read())
                 {

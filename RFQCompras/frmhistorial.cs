@@ -21,6 +21,7 @@ namespace RFQCompras
         string _usuario;
         public static string ConnectionString = ConfigurationManager.AppSettings["ConexionDB"];
         DataTable permisos = new DataTable();
+        
         public frmhistorial(int comprador, DateTime fecha,string Usuario)
         {
             int opcion; 
@@ -37,14 +38,23 @@ namespace RFQCompras
             if (validacion == 2 || validacion == 1 || validacion == 4)
             { opcion = 3; }
             else { opcion = 4; }
-            
-            Proc.combos(cmbComprador, opcion,usuario);
+
+            Proc.combos(cmbComprador, 4,usuario);
 
             cmbComprador.SelectedValue = comprador;
             _comprador = usuario;
             cmbComprador.SelectedValue = usuario;
-            if (validacion != 1)
-            { cmbComprador.Enabled = false;
+           
+
+            if (validacion == 1 || validacion == 4 || validacion == 5)
+            {
+                cmbComprador.Enabled = true;
+                
+            }
+            else
+            {
+                cmbComprador.Enabled = false;
+               
             }
         }
 

@@ -169,7 +169,7 @@ namespace RFQCompras
             if (resultado ==1)
             {
                
-                Proc.enviocorreo(4, "", txtEmailSolicitante.Text, txtEmailSolicitante.Text, txtUso.Text, txtObservaciones.Text,"");
+                Proc.enviocorreo(4, "", txtEmailSolicitante.Text, txtEmailManager.Text, txtUso.Text, txtObservaciones.Text,"");
 
             }
 
@@ -225,11 +225,11 @@ namespace RFQCompras
                     mensaje = "Debe Capturar la marca sugerida";
                     goto Salir;
                 }
-                if (SenderGrid.Rows[renglon].Cells[6].Value == null)
-                {
-                    mensaje = "Debe Capturar la imagen del producto";
-                    goto Salir;
-                }
+                //if (SenderGrid.Rows[renglon].Cells[6].Value == null)
+                //{
+                //    mensaje = "Debe Capturar la imagen del producto";
+                //    goto Salir;
+                //}
 
             
         Salir:

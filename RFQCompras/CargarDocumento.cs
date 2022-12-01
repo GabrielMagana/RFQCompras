@@ -122,11 +122,6 @@ namespace RFQCompras
             return;
         }
 
-        private void uploadTabla1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void CargarDocumento_Load(object sender, EventArgs e)
         {
             UploadTabla tabla = new UploadTabla();
